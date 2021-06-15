@@ -15,7 +15,7 @@ spec:
   interval: 5m
   install:
     remediation:
-      retries: 3
+      retries: 0
   values:
     defaultSettings:
       systemManagedComponentsNodeSelector: "kubernetes.io/arch:arm64"
