@@ -16,3 +16,15 @@ spec:
   install:
     remediation:
       retries: 3
+  values:
+    defaultSettings:
+      systemManagedComponentsNodeSelector: "kubernetes.io/arch:arm64"
+    longhornManager:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+    longhornDriver:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+    longhornUI:
+      nodeSelector:
+        kubernetes.io/arch: arm64

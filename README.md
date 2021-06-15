@@ -91,20 +91,7 @@ $ KUBECONFIG=kubeconfig k apply -f /secret/place/pinfra-master-key.yaml
 $ bootstrap/k3s-agent pinfra-1 pinfra-2
 ```
 
-##### Label node
-
-By labeling the node we allow the Kubernetes scheduler to target nodes
-like this one exclusively, by using a `nodeSelector`.
-
-```console
-$ KUBECONFIG=kubeconfig k label nodes pinfra-2 usage=storage
-```
-
 ##### Taint node
-
-A node selector is nice for workloads targeting specific nodes, but
-that does not exclude this node from being scheduled other
-workloads.
 
 `pinfra-2` is only meant to run storage workloads, so we want to avoid
 general workloads to land in this node. And so, we taint the node.
