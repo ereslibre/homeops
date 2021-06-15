@@ -24,7 +24,7 @@ to learn more.
 * `docker-registry-ui`
 * `external-dns`
 * `ingress-nginx`
-* `longhorn`: WIP
+* `longhorn`
 * `pihole`
 * `sealed-secrets`
 * `unifi`
@@ -32,10 +32,6 @@ to learn more.
 
 The main definition for `flux` is at
 [`flux/clusters/pinfra`](flux/clusters/pinfra).
-
-`longhorn` is targeted for `pinfra-2` exclusively, given that [armv7
-is not yet
-supported](https://github.com/longhorn/longhorn/issues/1997).
 
 ### Bootstrap Kubernetes
 
@@ -89,15 +85,6 @@ $ KUBECONFIG=kubeconfig k apply -f /secret/place/pinfra-master-key.yaml
 
 ```console
 $ bootstrap/k3s-agent pinfra-1 pinfra-2
-```
-
-##### Taint node
-
-`pinfra-2` is only meant to run storage workloads, so we want to avoid
-general workloads to land in this node. And so, we taint the node.
-
-```console
-$ KUBECONFIG=kubeconfig k taint nodes pinfra-2 dedicated=storage:NoSchedule
 ```
 
 ### Bootstrap Flux (and all workloads as a result)
