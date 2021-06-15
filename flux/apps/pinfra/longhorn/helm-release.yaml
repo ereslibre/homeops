@@ -17,23 +17,5 @@ spec:
       tlsSecret: longhorn-ereslibre-net-cert
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
-    longhornManager:
-      tolerations:
-      - key: "dedicated"
-        operator: "Equal"
-        value: "storage"
-        effect: "NoSchedule"
-    longhornDriver:
-      tolerations:
-      - key: "dedicated"
-        operator: "Equal"
-        value: "storage"
-        effect: "NoSchedule"
-    longhornUI:
-      tolerations:
-      - key: "dedicated"
-        operator: "Equal"
-        value: "storage"
-        effect: "NoSchedule"
     persistence:
       defaultClass: false
