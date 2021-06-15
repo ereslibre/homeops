@@ -5,8 +5,8 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-K3S_SERVER=${K3S_SERVER:-"$1"}
-HOST=${HOST:-"$2"}
+K3S_SERVER="$1"
+HOST="$2"
 
 k3sup join \
       --host "${HOST}" \
