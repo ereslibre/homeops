@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn
+spec:
+  chart:
+    spec:
+      version: "=>1.1.1 <1.2.0"
+  values:
+    defaultSettings:
+      systemManagedComponentsNodeSelector: "usage:storage"
+      taintToleration: "dedicated=storage:NoSchedule"
+    ingress:
+      enabled: true
+      host: longhorn.ereslibre.net
+      tls: true
+      tlsSecret: longhorn-ereslibre-net-cert
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+    longhornManager:
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "storage"
+        effect: "NoSchedule"
+      nodeSelector:
+        usage: storage
+    longhornDriver:
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "storage"
+        effect: "NoSchedule"
+      nodeSelector:
+        usage: storage
+    longhornUI:
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "storage"
+        effect: "NoSchedule"
+      nodeSelector:
+        usage: storage
+    persistence:
+      defaultClass: false

@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ereslibre-net-wildcard
+  namespace: global-certs
+spec:
+  secretName: ereslibre-net-wildcard
+  dnsNames:
+  - "*.ereslibre.net"
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+    group: cert-manager.io

@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pihole
+  namespace: pihole
+spec:
+  chart:
+    spec:
+      version: "=1.9.1"
+  values:
+    virtualHost: pihole.ereslibre.net
+    DNS1: "10.0.0.1"
+    DNS2: "10.0.0.1"
+    persistentVolumeClaim:
+      enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+      hosts:
+        - pihole.ereslibre.net
+      tls:
+        - hosts:
+          - pihole.ereslibre.net
+          secretName: pihole-ereslibre-net-cert
+      path: /
+    serviceDns:
+      type: LoadBalancer
+    serviceWeb:
+      type: ClusterIP
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: pihole
+            spec:
+              template:
+                spec:
+                  dnsConfig:
+                    nameservers:
+                      - 127.0.0.1
+                      - 10.0.0.1

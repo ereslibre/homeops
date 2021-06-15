@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: unifi
+  namespace: unifi
+spec:
+  chart:
+    spec:
+      version: "=>2.0.2 <2.1.0"
+  values:
+    timezone: Europe/Madrid
+    controllerService:
+      enabled: true
+      type: LoadBalancer
+    discoveryService:
+      enabled: true
+      type: LoadBalancer
+    guiService:
+      enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      hosts:
+        - unifi.ereslibre.net
+      tls:
+        - hosts:
+            - unifi.ereslibre.net
+          secretName: unifi-ereslibre-net-cert
+    persistence:
+      enabled: true
+    speedtestService:
+      enabled: true
+      type: LoadBalancer
+    stunService:
+      enabled: true
+      type: LoadBalancer
+    syslogService:
+      enabled: true
+      type: LoadBalancer
