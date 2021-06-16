@@ -14,18 +14,12 @@ spec:
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
-        nginx.ingress.kubernetes.io/rewrite-target: /$1/
       hosts:
         - pihole.ereslibre.net
       tls:
         - hosts:
           - pihole.ereslibre.net
           secretName: pihole-ereslibre-net-cert
-      path: /([^/]*)
-    serviceDns:
-      type: LoadBalancer
-    serviceWeb:
-      type: ClusterIP
   postRenderers:
     - kustomize:
         patchesStrategicMerge:
