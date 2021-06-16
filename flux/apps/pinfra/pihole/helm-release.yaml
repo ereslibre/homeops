@@ -11,19 +11,17 @@ spec:
     virtualHost: pihole.ereslibre.net
     DNS1: "10.0.0.1"
     DNS2: "10.0.0.1"
-    persistentVolumeClaim:
-      enabled: true
     ingress:
-      enabled: true
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
+        nginx.ingress.kubernetes.io/rewrite-target: /$1/
       hosts:
         - pihole.ereslibre.net
       tls:
         - hosts:
           - pihole.ereslibre.net
           secretName: pihole-ereslibre-net-cert
-      path: /
+      path: /([^/]*)
     serviceDns:
       type: LoadBalancer
     serviceWeb:

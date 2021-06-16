@@ -16,3 +16,8 @@ spec:
   install:
     remediation:
       retries: 3
+  values:
+    persistentVolumeClaim:
+      enabled: true
+    ingress:
+      enabled: true
