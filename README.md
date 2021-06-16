@@ -42,7 +42,7 @@ SSH server is started.
 The [`bootstrap`](bootstrap) folder contains scripts for bootstrapping
 `k3s` and `flux`.
 
-#### Before boostrapping `k3s`
+#### Before bootstrapping `k3s`
 
 Update `/boot/cmdline.txt` and add the following towards the end:
 
