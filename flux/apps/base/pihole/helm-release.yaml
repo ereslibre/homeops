@@ -18,10 +18,8 @@ spec:
       retries: 3
   values:
     ingress:
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$1/
       enabled: true
-      path: /([^/]*)      
+      path: /
     persistentVolumeClaim:
       enabled: true
     serviceDns:
