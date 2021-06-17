@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pihole
+  namespace: pihole
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/rewrite-target: $1/
+spec:
+  rules:
+  - host: pihole.ereslibre.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: pihole-web
+            port:
+              number: 80
+        path: /([^.]*[^/])$
+  tls:
+    - hosts:
+      - pihole.ereslibre.net
+      secretName: pihole-ereslibre-net-cert
