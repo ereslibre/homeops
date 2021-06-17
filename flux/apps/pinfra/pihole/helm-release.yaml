@@ -12,14 +12,8 @@ spec:
     DNS1: "10.0.0.1"
     DNS2: "10.0.0.1"
     ingress:
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
       hosts:
         - pihole.ereslibre.net
-      tls:
-        - hosts:
-          - pihole.ereslibre.net
-          secretName: pihole-ereslibre-net-cert
   postRenderers:
     - kustomize:
         patchesStrategicMerge:
