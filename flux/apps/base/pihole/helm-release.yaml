@@ -18,8 +18,7 @@ spec:
       retries: 3
   values:
     ingress:
-      enabled: true
-      path: /
+      enabled: false
     persistentVolumeClaim:
       enabled: true
     serviceDns:
