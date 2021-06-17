@@ -17,6 +17,7 @@ spec:
             port:
               number: 80
         path: /([^.]*[^/])$
+        pathType: Prefix
   tls:
     - hosts:
       - pihole.ereslibre.net
