@@ -7,3 +7,15 @@ spec:
   chart:
     spec:
       version: "=>2.22.0 <2.23.0"
+  values:
+    configuration:
+      provider: aws
+      backupStorageLocation:
+        bucket: pinfra-backup
+      volumeSnapshotLocation:
+        name: aws-default
+	config:
+	  region: eu-west-1
+    credentials:
+      useSecret: true
+      existingSecret: aws-credentials

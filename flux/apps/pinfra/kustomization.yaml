@@ -6,4 +6,4 @@ resources:
   - pihole
   - registry
   - unifi
-  # - velero
+  - velero
