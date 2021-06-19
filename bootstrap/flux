@@ -9,9 +9,11 @@ REPO_OWNER=${REPO_OWNER:-ereslibre}
 REPO_NAME=${REPO_NAME:-homeops}
 REPO_BRANCH=${REPO_BRANCH:-main}
 REPO_PATH=${REPO_PATH:-flux/clusters/pinfra}
+NAMESPACE=${NAMESPACE:-homeops-public}
 
 flux bootstrap github \
      --owner "${REPO_OWNER}" \
      --repository "${REPO_NAME}" \
      --branch "${REPO_BRANCH}" \
-     --path "${REPO_PATH}"
+     --path "${REPO_PATH}" \
+     --namespace "${NAMESPACE}"
