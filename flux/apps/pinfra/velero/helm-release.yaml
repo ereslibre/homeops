@@ -14,8 +14,8 @@ spec:
         bucket: pinfra-backup
       volumeSnapshotLocation:
         name: aws-default
-	config:
-	  region: eu-west-1
+        config:
+          region: eu-west-1
     credentials:
       useSecret: true
       existingSecret: aws-credentials
