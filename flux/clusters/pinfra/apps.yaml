@@ -10,15 +10,15 @@ spec:
     - name: infra
     - name: sealed-secrets
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: external-dns
       namespace: external-dns
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: longhorn
       namespace: longhorn
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: pihole
       namespace: pihole
@@ -26,11 +26,11 @@ spec:
       kind: Deployment
       name: registry
       namespace: registry
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: unifi
       namespace: unifi
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: velero
       namespace: velero
