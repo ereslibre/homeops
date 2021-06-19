@@ -28,7 +28,7 @@ to learn more.
 * `pihole`
 * `sealed-secrets`
 * `unifi`
-* `velero`: WIP
+* `velero`
 
 The main definition for `flux` is at
 [`flux/clusters/pinfra`](flux/clusters/pinfra).
