@@ -19,7 +19,6 @@ spec:
     credentials:
       useSecret: true
       existingSecret: aws-credentials
-    upgradeCRDs: false
     initContainers:
       - name: velero-plugin-for-aws
         image: velero/velero-plugin-for-aws:v1.2.0
@@ -27,3 +26,4 @@ spec:
         volumeMounts:
           - mountPath: /target
             name: plugins
+    upgradeCRDs: false
