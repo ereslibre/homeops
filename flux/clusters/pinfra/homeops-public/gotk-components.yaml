@@ -2,10 +2,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
-  name: homeops-public
+  name: homeops
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -14,7 +14,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: alerts.notification.toolkit.fluxcd.io
@@ -189,7 +189,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: buckets.source.toolkit.fluxcd.io
@@ -377,7 +377,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: gitrepositories.source.toolkit.fluxcd.io
@@ -648,7 +648,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: helmcharts.source.toolkit.fluxcd.io
@@ -847,7 +847,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: helmreleases.helm.toolkit.fluxcd.io
@@ -1382,7 +1382,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: helmrepositories.source.toolkit.fluxcd.io
@@ -1552,7 +1552,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: kustomizations.kustomize.toolkit.fluxcd.io
@@ -1949,7 +1949,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: providers.notification.toolkit.fluxcd.io
@@ -2106,7 +2106,7 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: receivers.notification.toolkit.fluxcd.io
@@ -2286,50 +2286,50 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: helm-controller
-  namespace: homeops-public
+  namespace: homeops
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: kustomize-controller
-  namespace: homeops-public
+  namespace: homeops
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: notification-controller
-  namespace: homeops-public
+  namespace: homeops
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: source-controller
-  namespace: homeops-public
+  namespace: homeops
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
-  name: crd-controller-homeops-public
+  name: crd-controller-homeops
 rules:
 - apiGroups:
   - source.toolkit.fluxcd.io
@@ -2406,10 +2406,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
-  name: cluster-reconciler-homeops-public
+  name: cluster-reconciler-homeops
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -2417,53 +2417,53 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kustomize-controller
-  namespace: homeops-public
+  namespace: homeops
 - kind: ServiceAccount
   name: helm-controller
-  namespace: homeops-public
+  namespace: homeops
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
-  name: crd-controller-homeops-public
+  name: crd-controller-homeops
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: crd-controller-homeops-public
+  name: crd-controller-homeops
 subjects:
 - kind: ServiceAccount
   name: kustomize-controller
-  namespace: homeops-public
+  namespace: homeops
 - kind: ServiceAccount
   name: helm-controller
-  namespace: homeops-public
+  namespace: homeops
 - kind: ServiceAccount
   name: source-controller
-  namespace: homeops-public
+  namespace: homeops
 - kind: ServiceAccount
   name: notification-controller
-  namespace: homeops-public
+  namespace: homeops
 - kind: ServiceAccount
   name: image-reflector-controller
-  namespace: homeops-public
+  namespace: homeops
 - kind: ServiceAccount
   name: image-automation-controller
-  namespace: homeops-public
+  namespace: homeops
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: notification-controller
-  namespace: homeops-public
+  namespace: homeops
 spec:
   ports:
   - name: http
@@ -2478,12 +2478,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: source-controller
-  namespace: homeops-public
+  namespace: homeops
 spec:
   ports:
   - name: http
@@ -2498,12 +2498,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: webhook-receiver
-  namespace: homeops-public
+  namespace: homeops
 spec:
   ports:
   - name: http
@@ -2518,12 +2518,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: helm-controller
-  namespace: homeops-public
+  namespace: homeops
 spec:
   replicas: 1
   selector:
@@ -2591,12 +2591,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: kustomize-controller
-  namespace: homeops-public
+  namespace: homeops
 spec:
   replicas: 1
   selector:
@@ -2666,12 +2666,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: notification-controller
-  namespace: homeops-public
+  namespace: homeops
 spec:
   replicas: 1
   selector:
@@ -2742,12 +2742,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
     control-plane: controller
   name: source-controller
-  namespace: homeops-public
+  namespace: homeops
 spec:
   replicas: 1
   selector:
@@ -2826,11 +2826,11 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: allow-egress
-  namespace: homeops-public
+  namespace: homeops
 spec:
   egress:
   - {}
@@ -2846,11 +2846,11 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: allow-scraping
-  namespace: homeops-public
+  namespace: homeops
 spec:
   ingress:
   - from:
@@ -2866,11 +2866,11 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   labels:
-    app.kubernetes.io/instance: homeops-public
+    app.kubernetes.io/instance: homeops
     app.kubernetes.io/part-of: flux
     app.kubernetes.io/version: v0.14.2
   name: allow-webhooks
-  namespace: homeops-public
+  namespace: homeops
 spec:
   ingress:
   - from:
