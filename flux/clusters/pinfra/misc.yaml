@@ -2,14 +2,14 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
   name: misc
-  namespace: flux-system
+  namespace: homeops-public
 spec:
   interval: 10m0s
   dependsOn:
     - name: infra
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: homeops-public
   path: ./flux/misc/pinfra
   prune: true
   validation: client

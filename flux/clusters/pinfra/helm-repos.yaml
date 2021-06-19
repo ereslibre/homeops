@@ -2,12 +2,12 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
   name: helm-repos
-  namespace: flux-system
+  namespace: homeops-public
 spec:
   interval: 10m0s
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: homeops-public
   path: ./flux/helm-repos
   prune: true
   validation: client

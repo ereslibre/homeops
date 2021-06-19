@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
   name: bitnami
-  namespace: flux-system
+  namespace: homeops-public
 spec:
   interval: 5m
   url: https://charts.bitnami.com/bitnami
