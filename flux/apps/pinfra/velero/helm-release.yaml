@@ -26,4 +26,5 @@ spec:
         volumeMounts:
           - mountPath: /target
             name: plugins
+    # CRD upgrade logic requires docker.io/bitnami/kubectl that is amd64 only (https://github.com/bitnami/bitnami-docker-kubectl/issues/22)
     upgradeCRDs: false
