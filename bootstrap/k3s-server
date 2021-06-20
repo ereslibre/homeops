@@ -11,4 +11,4 @@ USER=${USER:-pi}
 k3sup install \
       --host "${K3S_SERVER}" \
       --user "${USER}" \
-      --k3s-extra-args '--disable-network-policy --no-deploy traefik'
+      --k3s-extra-args '--no-deploy traefik'

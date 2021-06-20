@@ -17,4 +17,5 @@ flux bootstrap github \
      --branch "${REPO_BRANCH}" \
      --path "${REPO_PATH}" \
      --namespace "${NAMESPACE}" \
+     --network-policy=false \
      --secret-name homeops
