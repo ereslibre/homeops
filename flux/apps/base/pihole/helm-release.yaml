@@ -13,9 +13,6 @@ spec:
         name: pihole
         namespace: homeops
   interval: 5m
-  install:
-    remediation:
-      retries: 3
   values:
     ingress:
       enabled: true

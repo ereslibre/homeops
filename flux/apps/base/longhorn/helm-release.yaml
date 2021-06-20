@@ -13,9 +13,6 @@ spec:
         name: longhorn
         namespace: homeops
   interval: 5m
-  install:
-    remediation:
-      retries: 0
   values:
     defaultSettings:
       systemManagedComponentsNodeSelector: "kubernetes.io/arch:arm64"
