@@ -6,8 +6,9 @@ if [ "$#" -ne 1 ]; then
 fi
 
 K3S_SERVER="$1"
+USER=${USER:-pi}
 
 k3sup install \
       --host "${K3S_SERVER}" \
-      --user pi \
+      --user "${USER}" \
       --k3s-extra-args '--no-deploy traefik'

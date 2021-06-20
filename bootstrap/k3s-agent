@@ -7,8 +7,9 @@ fi
 
 K3S_SERVER="$1"
 HOST="$2"
+USER=${USER:-pi}
 
 k3sup join \
       --host "${HOST}" \
-      --user pi \
+      --user "${USER}" \
       --server-host "${K3S_SERVER}"
