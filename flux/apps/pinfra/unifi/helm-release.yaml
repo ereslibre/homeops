@@ -39,3 +39,10 @@ spec:
     syslogService:
       enabled: true
       type: LoadBalancer
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1

@@ -3,9 +3,9 @@
 Definitions for my main Kubernetes cluster at home. Current setup:
 
 | Hostname | IP address | Model               | Arch    | OS          |
-|----------|------------|---------------------|---------|-------------|
-| pinfra-1 | 10.0.0.20  | Raspberry Pi 4B 8GB | armv7l  | Raspbian 10 |
-| pinfra-2 | 10.0.0.21  | Raspberry Pi 4B 8GB | aarch64 | Debian 10   |
+|----------+------------+---------------------+---------+-------------|
+| pinfra-1 |  10.0.0.20 | Raspberry Pi 4B 8GB | aarch64 | Raspbian 10 |
+| pinfra-2 |  10.0.0.21 | Raspberry Pi 4B 8GB | aarch64 | Raspbian 10 |
 
 ## Core stack
 
@@ -60,14 +60,19 @@ This ensures the `k3s` agent -- essentially the Kubernetes `kubelet`
 From within the private network, I execute:
 
 ```console
-$ bootstrap/k3s-server pinfra-1
+$ USER=pi bootstrap/k3s-server pinfra-1
+```
+
+Now install `open-iscsi` for `longhorn` to consume later on:
+
+```console
+$ sudo apt update
+$ sudo apt install open-iscsi
 ```
 
 ##### Import the sealed secrets private key
 
-> Note: if you are an external user, the `SealedSecrets` included in
-> this repository won't be usable and you'll have to generate a
-> key pair and generate your own `SealedSecrets`.
+> You will have to generate your own `SealedSecrets`.
 
 Before we deploy anything, we have to restore the private key (a
 regular Kubernetes `Secret`)used to decipher the `SealedSecrets` in
@@ -84,7 +89,14 @@ $ KUBECONFIG=kubeconfig k apply -f /secret/place/pinfra-master-key.yaml
 #### `pinfra-2`
 
 ```console
-$ bootstrap/k3s-agent pinfra-1 pinfra-2
+$ USER=pi bootstrap/k3s-agent pinfra-1 pinfra-2
+```
+
+Now install `open-iscsi` for `longhorn` to consume later on:
+
+```console
+$ sudo apt update
+$ sudo apt install open-iscsi
 ```
 
 ### Bootstrap Flux
