@@ -3,7 +3,7 @@
 Definitions for my main Kubernetes cluster at home. Current setup:
 
 | Hostname | IP address | Model               | Arch    | OS          |
-|----------+------------+---------------------+---------+-------------|
+|----------|------------|---------------------|---------|-------------|
 | pinfra-1 |  10.0.0.20 | Raspberry Pi 4B 8GB | aarch64 | Raspbian 10 |
 | pinfra-2 |  10.0.0.21 | Raspberry Pi 4B 8GB | aarch64 | Raspbian 10 |
 
