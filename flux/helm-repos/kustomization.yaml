@@ -7,6 +7,7 @@ resources:
   - jetstack.yaml
   - k8s-at-home.yaml
   - longhorn.yaml
+  - nextcloud.yaml
   - pihole.yaml
   - sealed-secrets.yaml
   - vmware-tanzu.yaml
