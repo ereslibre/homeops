@@ -20,6 +20,10 @@ spec:
       namespace: longhorn
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
+      name: nextcloud
+      namespace: nextcloud
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
       name: pihole
       namespace: pihole
     - apiVersion: apps/v1
