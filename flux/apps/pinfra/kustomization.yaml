@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - external-dns
   - longhorn
+  - nextcloud
   - pihole
   - registry
   - unifi

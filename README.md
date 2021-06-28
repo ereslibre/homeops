@@ -25,6 +25,7 @@ to learn more.
 * `external-dns`
 * `ingress-nginx`
 * `longhorn`
+* `nextcloud`
 * `pihole`
 * `sealed-secrets`
 * `unifi`
