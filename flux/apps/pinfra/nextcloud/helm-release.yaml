@@ -22,6 +22,6 @@ spec:
       host: nextcloud.ereslibre.net
       existingSecret:
         enabled: true
-	secretName: users
-	usernameKey: username
-	passwordKey: password
+        secretName: users
+        usernameKey: username
+        passwordKey: password
