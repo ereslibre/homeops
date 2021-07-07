@@ -11,5 +11,3 @@ spec:
         env:
         - name: REGISTRY_TITLE
           value: "registry.ereslibre.net"
-        - name: REGISTRY_URL
-          value: "https://registry.ereslibre.net"
