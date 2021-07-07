@@ -23,8 +23,6 @@ spec:
         env:
         - name: REGISTRY_STORAGE_DELETE_ENABLED
           value: "true"
-        - name: SINGLE_REGISTRY
-          value: "true"
         volumeMounts:
         - name: data
           mountPath: /var/lib/registry
@@ -36,6 +34,8 @@ spec:
         - name: NGINX_PROXY_PASS_URL
           value: "http://127.0.0.1:5000"
         - name: DELETE_IMAGES
+          value: "true"
+        - name: SINGLE_REGISTRY
           value: "true"
       volumes:
       - name: data
