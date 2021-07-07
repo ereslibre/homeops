@@ -25,3 +25,6 @@ spec:
         secretName: users
         usernameKey: username
         passwordKey: password
+      extraEnv:
+        - name: OVERWRITEPROTOCOL
+          value: https
