@@ -16,6 +16,10 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-production
       hosts:
         - pihole.ereslibre.net
+      tls:
+        - hosts:
+            - pihole.ereslibre.net
+          secretName: pihole-ereslibre-net-cert
   postRenderers:
     - kustomize:
         patchesStrategicMerge:
