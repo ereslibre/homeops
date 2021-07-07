@@ -8,6 +8,6 @@ spec:
   dnsNames:
   - "*.ereslibre.net"
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-production
     kind: ClusterIssuer
     group: cert-manager.io

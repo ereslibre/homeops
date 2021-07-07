@@ -14,6 +14,6 @@ spec:
       tls: true
       tlsSecret: longhorn-ereslibre-net-cert
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        cert-manager.io/cluster-issuer: letsencrypt-production
     persistence:
       defaultClass: false

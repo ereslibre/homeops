@@ -15,7 +15,7 @@ spec:
         hosts:
         - nextcloud.ereslibre.net
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        cert-manager.io/cluster-issuer: letsencrypt-production
     persistence:
       enabled: true
     nextcloud:

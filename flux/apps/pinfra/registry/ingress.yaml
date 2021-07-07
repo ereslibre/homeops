@@ -4,7 +4,7 @@ metadata:
   name: registry
   namespace: registry
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   rules:
   - host: registry.ereslibre.net
