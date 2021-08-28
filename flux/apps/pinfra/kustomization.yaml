@@ -5,6 +5,7 @@ resources:
   - longhorn
   - nextcloud
   - pihole
+  - plex
   - registry
   - unifi
   - velero

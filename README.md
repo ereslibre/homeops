@@ -27,6 +27,7 @@ to learn more.
 * `longhorn`
 * `nextcloud`
 * `pihole`
+* `plex`
 * `sealed-secrets`
 * `unifi`
 * `velero`
