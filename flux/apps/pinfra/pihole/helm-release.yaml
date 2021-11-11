@@ -9,8 +9,8 @@ spec:
       version: "=1.9.1"
   values:
     virtualHost: pihole.ereslibre.net
-    DNS1: "10.0.0.1"
-    DNS2: "10.0.0.1"
+    DNS1: "10.0.4.1"
+    DNS2: "10.0.4.1"
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
@@ -33,4 +33,4 @@ spec:
                   dnsConfig:
                     nameservers:
                       - 127.0.0.1
-                      - 10.0.0.1
+                      - 10.0.4.1
