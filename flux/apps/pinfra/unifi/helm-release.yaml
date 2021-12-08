@@ -30,13 +30,13 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-        tls:
-          hosts:
-            - host: unifi.ereslibre.net
-              secretName: unifi-ereslibre-net-cert
-              paths:
-                - path: /
-                  pathType: Prefix
-                  service:
-                    name: main
-                    port: 8080
+        tls: true
+        hosts:
+          - host: unifi.ereslibre.net
+            secretName: unifi-ereslibre-net-cert
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: unifi
+                  port: 8080
