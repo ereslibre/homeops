@@ -13,9 +13,6 @@ spec:
     service:
       main:
         ports:
-          http:
-            port: 8080
-            protocol: HTTP
           speedtest:
             type: LoadBalancer
           stun:
