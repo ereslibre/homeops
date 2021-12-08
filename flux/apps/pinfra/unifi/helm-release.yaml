@@ -27,8 +27,6 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-        hosts:
-          - unifi.ereslibre.net
         tls:
           - hosts:
               - unifi.ereslibre.net
