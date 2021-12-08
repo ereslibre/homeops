@@ -40,3 +40,6 @@ spec:
                 service:
                   name: unifi
                   port: 8443
+    persistence:
+      data:
+        enabled: true
