@@ -38,4 +38,4 @@ spec:
                 pathType: Prefix
                 service:
                   name: unifi
-                  port: 8080
+                  port: controller
