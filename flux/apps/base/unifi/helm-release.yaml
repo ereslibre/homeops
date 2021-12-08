@@ -13,22 +13,3 @@ spec:
         name: k8s-at-home
         namespace: homeops
   interval: 5m
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - kind: Deployment
-            apiVersion: apps/v1
-            metadata:
-              name: unifi
-            spec:
-              template:
-                spec:
-                  containers:
-                    - name: unifi
-                      startupProbe:
-                        httpGet:
-                          path: /status
-                          port: https-gui
-                          scheme: HTTPS
-                        failureThreshold: 30
-                        periodSeconds: 10

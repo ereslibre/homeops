@@ -6,36 +6,30 @@ metadata:
 spec:
   chart:
     spec:
-      version: "=>2.0.2 <2.1.0"
+      version: "=>4.4.0 <4.5.0"
   values:
-    timezone: Europe/Madrid
-    controllerService:
-      enabled: true
-      type: LoadBalancer
-    discoveryService:
-      enabled: true
-      type: LoadBalancer
-    guiService:
-      enabled: true
+    env:
+      TZ: Europe/Madrid
+    service:
+      main:
+        ports:
+          speedtest:
+            type: LoadBalancer
+          stun:
+            type: LoadBalancer
+          syslog:
+            type: LoadBalancer
+          discovery:
+            type: LoadBalancer
     ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-production
-        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-      hosts:
-        - unifi.ereslibre.net
-      tls:
-        - hosts:
-            - unifi.ereslibre.net
-          secretName: unifi-ereslibre-net-cert
-    persistence:
-      enabled: true
-    speedtestService:
-      enabled: true
-      type: LoadBalancer
-    stunService:
-      enabled: true
-      type: LoadBalancer
-    syslogService:
-      enabled: true
-      type: LoadBalancer
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        hosts:
+          - unifi.ereslibre.net
+        tls:
+          - hosts:
+              - unifi.ereslibre.net
+            secretName: unifi-ereslibre-net-cert
