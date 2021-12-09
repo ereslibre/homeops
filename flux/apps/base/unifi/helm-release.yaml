@@ -14,6 +14,11 @@ spec:
         namespace: homeops
   interval: 5m
   values:
+    persistence:
+      data:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 10Gi
     service:
       main:
         ports:
@@ -25,8 +30,3 @@ spec:
             type: LoadBalancer
           discovery:
             type: LoadBalancer
-      persistence:
-        data:
-          enabled: true
-          accessMode: ReadWriteOnce
-          size: 10Gi
