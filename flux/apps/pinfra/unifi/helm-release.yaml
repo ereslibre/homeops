@@ -10,17 +10,6 @@ spec:
   values:
     env:
       TZ: Europe/Madrid
-    service:
-      main:
-        ports:
-          speedtest:
-            type: LoadBalancer
-          stun:
-            type: LoadBalancer
-          syslog:
-            type: LoadBalancer
-          discovery:
-            type: LoadBalancer
     ingress:
       main:
         enabled: true
@@ -40,6 +29,3 @@ spec:
                 service:
                   name: unifi
                   port: 8443
-    persistence:
-      data:
-        enabled: true

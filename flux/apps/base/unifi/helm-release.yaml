@@ -13,3 +13,20 @@ spec:
         name: k8s-at-home
         namespace: homeops
   interval: 5m
+  values:
+    service:
+      main:
+        ports:
+          speedtest:
+            type: LoadBalancer
+          stun:
+            type: LoadBalancer
+          syslog:
+            type: LoadBalancer
+          discovery:
+            type: LoadBalancer
+      persistence:
+        data:
+          enabled: true
+          accessMode: ReadWriteOnce
+          size: 10Gi
