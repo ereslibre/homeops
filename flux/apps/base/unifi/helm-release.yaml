@@ -14,19 +14,14 @@ spec:
         namespace: homeops
   interval: 5m
   values:
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
     persistence:
       data:
         enabled: true
         accessMode: ReadWriteOnce
         size: 10Gi
-    service:
-      main:
-        ports:
-          speedtest:
-            type: LoadBalancer
-          stun:
-            type: LoadBalancer
-          syslog:
-            type: LoadBalancer
-          discovery:
-            type: LoadBalancer
