@@ -12,6 +12,8 @@ spec:
       TZ: Europe/Madrid
     ingress:
       main:
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
         tls:
           - hosts:
               - unifi.ereslibre.net
