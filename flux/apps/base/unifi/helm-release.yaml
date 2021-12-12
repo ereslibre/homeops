@@ -14,8 +14,6 @@ spec:
         namespace: homeops
   interval: 5m
   values:
-    image:
-      tag: v6.5.54
     ingress:
       main:
         enabled: true
