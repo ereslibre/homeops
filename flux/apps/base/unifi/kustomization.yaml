@@ -4,3 +4,4 @@ namespace: unifi
 resources:
   - namespace.yaml
   - helm-release.yaml
+  - service.yaml
