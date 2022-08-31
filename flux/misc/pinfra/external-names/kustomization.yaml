@@ -4,3 +4,4 @@ namespace: external-names
 resources:
   - namespace.yaml
   - synology.yaml
+  - nuc-1.yaml
