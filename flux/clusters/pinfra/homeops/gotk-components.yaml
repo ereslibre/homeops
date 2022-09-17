@@ -5567,7 +5567,7 @@ spec:
     spec:
       containers:
       - args:
-        - --events-addr=http://notification-controller.homeops.svc.cluster.local./
+        - --events-addr=http://notification-controller/
         - --watch-all-namespaces=true
         - --log-level=info
         - --log-encoding=json
@@ -5649,7 +5649,7 @@ spec:
     spec:
       containers:
       - args:
-        - --events-addr=http://notification-controller.homeops.svc.cluster.local./
+        - --events-addr=http://notification-controller/
         - --watch-all-namespaces=true
         - --log-level=info
         - --log-encoding=json
@@ -5820,7 +5820,7 @@ spec:
     spec:
       containers:
       - args:
-        - --events-addr=http://notification-controller.homeops.svc.cluster.local./
+        - --events-addr=http://notification-controller/
         - --watch-all-namespaces=true
         - --log-level=info
         - --log-encoding=json
