@@ -10,6 +10,8 @@ spec:
   values:
     env:
       TZ: Europe/Madrid
+    image:
+      tag: v7.2.95
     ingress:
       main:
         annotations:
