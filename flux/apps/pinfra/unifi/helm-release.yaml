@@ -8,10 +8,10 @@ spec:
     spec:
       version: "=5.1.2"
   values:
-    env:
-      TZ: Europe/Madrid
     image:
       tag: v7.2.95
+    env:
+      TZ: Europe/Madrid
     ingress:
       main:
         annotations:
