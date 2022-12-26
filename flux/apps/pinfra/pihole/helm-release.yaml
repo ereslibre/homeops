@@ -13,6 +13,8 @@ spec:
     DNS2: "10.0.1.1"
     image:
       tag: 2022.09.4
+    admin:
+      existingSecret: admin-password
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
