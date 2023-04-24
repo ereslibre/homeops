@@ -11,6 +11,9 @@ spec:
     remediation:
       retries: -1
     replace: true
+  upgrade:
+    remediation:
+      retries: -1
   values:
     cloudflare:
       secretName: cloudflare-token
