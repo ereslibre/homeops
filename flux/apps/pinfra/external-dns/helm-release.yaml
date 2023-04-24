@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      version: "=0.13.4"
+      version: "=6.18.0"
   values:
     cloudflare:
       secretName: cloudflare-token
