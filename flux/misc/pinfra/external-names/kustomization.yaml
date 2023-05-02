@@ -5,3 +5,4 @@ resources:
   - namespace.yaml
   - synology.yaml
   - nuc-1.yaml
+  - nuc-2.yaml
