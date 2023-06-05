@@ -43,4 +43,3 @@ spec:
     name: homeops
   path: ./flux/apps/pinfra
   prune: true
-  validation: client

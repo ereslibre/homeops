@@ -22,4 +22,3 @@ spec:
     name: homeops
   path: ./flux/infra/pinfra
   prune: true
-  validation: client

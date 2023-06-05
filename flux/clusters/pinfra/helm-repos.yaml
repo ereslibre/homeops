@@ -10,4 +10,3 @@ spec:
     name: homeops
   path: ./flux/helm-repos
   prune: true
-  validation: client
