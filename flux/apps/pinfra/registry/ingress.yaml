@@ -6,6 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
+  ingressClassName: nginx
   rules:
   - host: registry.ereslibre.net
     http:
