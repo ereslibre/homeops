@@ -10,6 +10,7 @@ spec:
   values:
     ingress:
       enabled: true
+      className: nginx
       tls:
       - secretName: nextcloud-ereslibre-net-cert
         hosts:

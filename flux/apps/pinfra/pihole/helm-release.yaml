@@ -16,6 +16,7 @@ spec:
     admin:
       existingSecret: admin-password
     ingress:
+      ingressClassName: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
       hosts:

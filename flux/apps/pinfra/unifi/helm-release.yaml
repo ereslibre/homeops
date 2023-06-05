@@ -16,6 +16,7 @@ spec:
       main:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
+        ingressClassName: nginx
         tls:
           - hosts:
               - unifi.ereslibre.net
