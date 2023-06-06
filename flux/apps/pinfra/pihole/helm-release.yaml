@@ -6,13 +6,11 @@ metadata:
 spec:
   chart:
     spec:
-      version: "=2.9.3"
+      version: "=2.14.0"
   values:
     virtualHost: pihole.ereslibre.net
     DNS1: "10.0.1.1"
     DNS2: "10.0.1.1"
-    image:
-      tag: 2022.09.4
     admin:
       existingSecret: admin-password
     ingress:
