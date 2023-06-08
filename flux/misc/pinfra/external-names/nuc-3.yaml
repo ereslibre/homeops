@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nuc-3
+  namespace: external-names
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: nuc-3.ereslibre.net
+spec:
+  type: ExternalName
+  externalName: 10.0.10.10
