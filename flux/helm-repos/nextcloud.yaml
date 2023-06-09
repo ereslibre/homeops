@@ -1,8 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: nextcloud
-  namespace: homeops
-spec:
-  interval: 5m
-  url: https://nextcloud.github.io/helm/
