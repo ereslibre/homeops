@@ -26,10 +26,6 @@ spec:
       kind: HelmRelease
       name: unifi
       namespace: unifi
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: velero
-      namespace: velero
   sourceRef:
     kind: GitRepository
     name: homeops
