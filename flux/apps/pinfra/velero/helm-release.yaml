@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      version: "=>2.22.0 <2.23.0"
+      version: "=>4.0.3 <4.1.0"
   values:
     configuration:
       provider: aws
@@ -21,10 +21,8 @@ spec:
       existingSecret: aws-credentials
     initContainers:
       - name: velero-plugin-for-aws
-        image: velero/velero-plugin-for-aws:v1.2.0
+        image: velero/velero-plugin-for-aws:v1.7.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - mountPath: /target
             name: plugins
-    # CRD upgrade logic requires docker.io/bitnami/kubectl that is amd64 only (https://github.com/bitnami/bitnami-docker-kubectl/issues/22)
-    upgradeCRDs: false
