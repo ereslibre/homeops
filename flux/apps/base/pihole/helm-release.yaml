@@ -20,5 +20,25 @@ spec:
       enabled: true
     serviceDns:
       type: LoadBalancer
+      # Cluster external traffic policy is needed in order for
+      # multiple agents to answer DNS requests, due to this Klipper
+      # LB bug:
+      #   https://github.com/k3s-io/k3s/issues/7561
+      # It got fixed in https://github.com/k3s-io/klipper-lb/pull/54,
+      # tagged with klipper-lb 0.4.4. This got backported to k3s 1.26
+      # here:
+      #   https://github.com/k3s-io/k3s/pull/7717
+      # But a 1.26 patch level version has not been released yet.
+      # It's also not possible to override k3s component versions at
+      # this time, until https://github.com/k3s-io/k3s/pull/7626 is
+      # available, what would allow us to set the var with go build on
+      # the NixOS derivation -- but this is also not released yet --.
+      #
+      # The solution for now is to use Cluster externalTrafficPolicy
+      # until a new k3s version is released, or until it's possible to
+      # override the klipper-lb component version from the NixOS
+      # definition. This last option would also require to map this
+      # setting to NixOS somehow as well.
+      externalTrafficPolicy: Cluster
     serviceWeb:
       type: ClusterIP
