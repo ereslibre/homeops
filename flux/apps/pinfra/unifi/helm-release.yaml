@@ -8,8 +8,6 @@ spec:
     spec:
       version: "=5.1.2"
   values:
-    image:
-      tag: v7.2.95
     env:
       TZ: Europe/Madrid
     ingress:

@@ -5,7 +5,7 @@ resources:
   - bitnami.yaml
   - ingress-nginx.yaml
   - jetstack.yaml
-  - k8s-at-home.yaml
   - pihole.yaml
   - sealed-secrets.yaml
+  - truecharts.yaml
   - vmware-tanzu.yaml
