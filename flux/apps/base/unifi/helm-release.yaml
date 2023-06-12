@@ -20,8 +20,3 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    persistence:
-      data:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10Gi
