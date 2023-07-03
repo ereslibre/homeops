@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: global-certs
 resources:
   - ereslibre-net-wildcard.yaml
+  - hulk-ipmi-ereslibre-net.yaml
   - namespace.yaml
   - synology-ereslibre-net.yaml
