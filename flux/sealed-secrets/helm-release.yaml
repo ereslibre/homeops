@@ -10,6 +10,6 @@ spec:
       chart: sealed-secrets
       sourceRef:
         kind: HelmRepository
-        name: sealed-secrets
+        name: bitnami
         namespace: homeops
   interval: 5m
