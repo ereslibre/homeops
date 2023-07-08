@@ -4,6 +4,9 @@ metadata:
   name: home-assistant
   namespace: home-assistant
 spec:
+  chart:
+    spec:
+      version: ">=19.0.34 <20.0.0"
   values:
     cnpg:
       main:
