@@ -16,10 +16,6 @@ spec:
       namespace: external-dns
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: home-assistant
-      namespace: home-assistant
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
       name: pihole
       namespace: pihole
     - apiVersion: apps/v1
