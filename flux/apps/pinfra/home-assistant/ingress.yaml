@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: home-assistant.ereslibre.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: home-assistant
+            port:
+              name: http
+  tls:
+  - hosts:
+    - home-assistant.ereslibre.net
+    secretName: home-assistant-ereslibre-net-cert
