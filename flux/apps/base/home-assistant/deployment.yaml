@@ -58,6 +58,7 @@ spec:
             mountPath: /config
           - name: configuration-yaml
             mountPath: /config/configuration.yaml
+            subPath: configuration.yaml
       restartPolicy: Always
       volumes:
         - name: config-root
