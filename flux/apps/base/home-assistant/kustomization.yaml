@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: home-assistant
 resources:
   - namespace.yaml
+  - configmap.yaml
   - deployment.yaml
   - ingress.yaml
   - pvc.yaml
@@ -11,12 +12,3 @@ configMapGenerator:
 - name: home-assistant-config
   literals:
   - TZ="Europe/Madrid"
-# FIXME: Modified manually at /config/configuration.yaml; this should
-# be a configmap instead.
-#
-# http:
-#   use_x_forwarded_for: true
-#   trusted_proxies:
-#     - 10.0.0.0/8
-#   ip_ban_enabled: false
-#   login_attempts_threshold: 5

@@ -54,10 +54,18 @@ spec:
           timeoutSeconds: 1
           periodSeconds: 5
         volumeMounts:
-          - name: ha-config-root
+          - name: config-root
             mountPath: /config
+          - name: configuration-yaml
+            mountPath: /config/configuration.yaml
       restartPolicy: Always
       volumes:
-        - name: ha-config-root
+        - name: config-root
           persistentVolumeClaim:
             claimName: home-assistant-config-root
+        - name: configuration-yaml
+          configMap:
+            name: configuration-yaml
+            items:
+            - key: configuration.yaml
+              path: configuration.yaml
