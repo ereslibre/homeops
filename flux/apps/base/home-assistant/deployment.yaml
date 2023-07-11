@@ -56,16 +56,16 @@ spec:
         volumeMounts:
           - name: config-root
             mountPath: /config
-          - name: configurations-automations-yaml
+          - name: configurations
             mountPath: /config/automations.yaml
             subPath: automations.yaml
-          - name: configurations-configuration-yaml
+          - name: configurations
             mountPath: /config/configuration.yaml
             subPath: configuration.yaml
-          - name: configurations-scenes-yaml
+          - name: configurations
             mountPath: /config/scenes.yaml
             subPath: scenes.yaml
-          - name: configurations-scripts-yaml
+          - name: configurations
             mountPath: /config/scripts.yaml
             subPath: scripts.yaml
       restartPolicy: Always
