@@ -1,8 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configuration-yaml
+  name: configurations
 data:
+  automations.yaml: |
+    []
   configuration.yaml: |
     # Loads default set of integrations. Do not remove.
     default_config:
@@ -22,3 +24,5 @@ data:
     automation: !include automations.yaml
     script: !include scripts.yaml
     scene: !include scenes.yaml
+  scenes.yaml: ""
+  scripts.yaml: ""
