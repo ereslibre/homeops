@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: shiori
+  namespace: shiori
+spec:
+  releaseName: shiori
+  chart:
+    spec:
+      chart: shiori
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: homeops
+  interval: 5m
+  values:
+    ingress:
+      main:
+        enabled: true
