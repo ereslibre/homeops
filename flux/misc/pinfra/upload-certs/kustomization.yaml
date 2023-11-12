@@ -5,3 +5,4 @@ resources:
   - namespace.yaml
   - service-account.yaml
   - synology-ereslibre-net.yaml
+  - upload-certs-ssh-key.yaml

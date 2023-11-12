@@ -12,7 +12,7 @@ spec:
           serviceAccountName: upload-certs
           containers:
           - name: upload-certs
-            image: bitnami/kubectl:1.26
+            image: nixery.dev/shell/kubectl/openssh
             imagePullPolicy: IfNotPresent
             command: ["/bin/bash", "-c"]
             args:
