@@ -9,23 +9,6 @@ spec:
     - name: helm-repos
     - name: infra
     - name: sealed-secrets
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: external-dns
-      namespace: external-dns
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: pihole
-      namespace: pihole
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: registry
-      namespace: registry
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: unifi
-      namespace: unifi
   sourceRef:
     kind: GitRepository
     name: homeops
