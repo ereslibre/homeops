@@ -25,5 +25,5 @@ roleRef:
 subjects:
 - apiGroup: ""
   kind: ServiceAccount
-  name: default
+  name: upload-certs
   namespace: upload-certs

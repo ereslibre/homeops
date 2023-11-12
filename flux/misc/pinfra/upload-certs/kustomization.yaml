@@ -3,4 +3,5 @@ kind: Kustomization
 namespace: upload-certs
 resources:
   - namespace.yaml
+  - service-account.yaml
   - synology-ereslibre-net.yaml
