@@ -18,4 +18,4 @@ spec:
               - |
                 kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.crt" }}' | base64 -d > synology-ereslibre-net.crt
                 kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.key" }}' | base64 -d > synology-ereslibre-net.key
-            restartPolicy: OnFailure
+          restartPolicy: OnFailure
