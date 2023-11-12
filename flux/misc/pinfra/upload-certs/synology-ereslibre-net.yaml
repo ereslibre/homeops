@@ -17,23 +17,17 @@ spec:
             volumeMounts:
             - name: ssh-key
               mountPath: "/etc/ssh-key"
+            - name: upload-certs
+              mountPath: "/tmp/upload-certs"
+              readOnly: true
             command: ["/bin/bash", "-c"]
-            args:
-              - |
-                kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.crt" }}' | base64 -d > /tmp/synology-ereslibre-net.crt
-                kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.key" }}' | base64 -d > /tmp/synology-ereslibre-net.key
-                useradd --system --uid 0 root
-                cat <<EOF > /etc/ssh-identity
-                Host synology.ereslibre.net
-                  IdentityFile /etc/ssh-key/id_rsa
-                  StrictHostKeyChecking no
-                  UserKnownHostsFile=/dev/null
-                EOF
-                scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.crt synology.ereslibre.net:
-                scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.key synology.ereslibre.net:
+            args: ["/tmp/upload-certs/upload-certs.sh"]
           volumes:
           - name: ssh-key
             secret:
               secretName: upload-certs-ssh-key
               defaultMode: 256
+          - name: upload-certs
+            configMap:
+              name: upload-certs
           restartPolicy: OnFailure
