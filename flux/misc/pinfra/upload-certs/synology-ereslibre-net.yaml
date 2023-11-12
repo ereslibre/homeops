@@ -12,11 +12,27 @@ spec:
           serviceAccountName: upload-certs
           containers:
           - name: upload-certs
-            image: nixery.dev/shell/kubectl/openssh
+            image: nixery.dev/shell/kubectl/openssh/shadow
             imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: ssh-key
+              mountPath: "/etc/ssh-key"
             command: ["/bin/bash", "-c"]
             args:
               - |
                 kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.crt" }}' | base64 -d > /tmp/synology-ereslibre-net.crt
                 kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.key" }}' | base64 -d > /tmp/synology-ereslibre-net.key
+                useradd --system --uid 0 root
+                cat <<EOF > /etc/ssh-identity
+                Host synology.ereslibre.net
+                  IdentityFile /etc/ssh-key/id_rsa
+                  StrictHostKeyChecking no
+                  UserKnownHostsFile=/dev/null
+                EOF
+                scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.{crt,key} synology.ereslibre.net:
+          volumes:
+          - name: ssh-key
+            secret:
+              secretName: upload-certs-ssh-key
+              defaultMode: 256
           restartPolicy: OnFailure
