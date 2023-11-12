@@ -9,11 +9,11 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: upload-certs
           containers:
           - name: upload-certs
             image: bitnami/kubectl:1.26
             imagePullPolicy: IfNotPresent
-            serviceAccountName: upload-certs
             command: ["/bin/bash", "-c"]
             args:
               - |
