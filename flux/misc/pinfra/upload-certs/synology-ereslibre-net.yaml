@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: upload-synology-ereslibre-net-cert
+  namespace: upload-certs
+spec:
+  schedule: "0 0 * * 1"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: upload-certs
+            image: bitnami/kubectl:1.26
+            imagePullPolicy: IfNotPresent
+            command: ["/bin/bash", "-c"]
+            args:
+              - |
+                kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.crt" }}' | base64 -d > synology-ereslibre-net.crt
+                kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.key" }}' | base64 -d > synology-ereslibre-net.key
+            restartPolicy: OnFailure
