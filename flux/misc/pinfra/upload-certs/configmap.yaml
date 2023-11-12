@@ -17,5 +17,5 @@ data:
       UserKnownHostsFile    /dev/null
     EOF
     echo "Uploading certificates to synology"
-    scp -F /etc/ssh-config /tmp/synology-ereslibre-net.crt synology.ereslibre.net:/var/services/homes/ereslibre/.certs
-    scp -F /etc/ssh-config /tmp/synology-ereslibre-net.key synology.ereslibre.net:/var/services/homes/ereslibre/.certs
+    scp -F /etc/ssh-config /tmp/synology-ereslibre-net.crt synology.ereslibre.net:homes/ereslibre/.certs/synology-ereslibre-net.crt
+    scp -F /etc/ssh-config /tmp/synology-ereslibre-net.key synology.ereslibre.net:homes/ereslibre/.certs/synology-ereslibre-net.key
