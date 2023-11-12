@@ -26,9 +26,9 @@ spec:
           - name: ssh-key
             secret:
               secretName: upload-certs-ssh-key
-              defaultMode: 400
+              defaultMode: 0400
           - name: upload-certs
             configMap:
               name: upload-certs
-              defaultMode: 700
+              defaultMode: 0700
           restartPolicy: OnFailure
