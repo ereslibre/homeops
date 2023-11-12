@@ -5,3 +5,4 @@ resources:
   - ereslibre-net-wildcard.yaml
   - namespace.yaml
   - synology-ereslibre-net.yaml
+  - rbac.yaml
