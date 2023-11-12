@@ -29,7 +29,8 @@ spec:
                   StrictHostKeyChecking no
                   UserKnownHostsFile=/dev/null
                 EOF
-                scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.{crt,key} synology.ereslibre.net:
+                scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.crt synology.ereslibre.net:
+                scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.key synology.ereslibre.net:
           volumes:
           - name: ssh-key
             secret:
