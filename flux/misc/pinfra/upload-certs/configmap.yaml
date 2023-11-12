@@ -9,12 +9,12 @@ data:
     kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.crt" }}' | base64 -d > /tmp/synology-ereslibre-net.crt
     kubectl get secret -n global-certs synology-ereslibre-net --template='{{ index .data "tls.key" }}' | base64 -d > /tmp/synology-ereslibre-net.key
     useradd --system --uid 0 root
-    cat <<EOF > /etc/ssh-identity
+    cat <<EOF > /etc/ssh-config
     Host synology.ereslibre.net
       IdentityFile /etc/ssh-key/id_rsa
       StrictHostKeyChecking no
       UserKnownHostsFile=/dev/null
     EOF
     echo "Uploading certificates to synology"
-    scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.crt synology.ereslibre.net:
-    scp -i /etc/ssh-identity /tmp/synology-ereslibre-net.key synology.ereslibre.net:
+    scp -F /etc/ssh-config /tmp/synology-ereslibre-net.crt synology.ereslibre.net:
+    scp -F /etc/ssh-config /tmp/synology-ereslibre-net.key synology.ereslibre.net:
