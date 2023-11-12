@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shiori
+  namespace: shiori
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: shiori.ereslibre.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: shiori
+            port:
+              name: shiori
+  tls:
+  - hosts:
+    - shiori.ereslibre.net
+    secretName: shiori-ereslibre-net-cert

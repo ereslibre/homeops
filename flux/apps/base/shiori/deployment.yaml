@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shiori
+  namespace: shiori
+  labels:
+    app: shiori
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shiori
+  template:
+    metadata:
+      labels:
+        app: shiori
+    spec:
+      containers:
+      - name: shiori
+        image: ghcr.io/go-shiori/shiori:v1.5.5
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: data
+          mountPath: /shiori
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: shiori-data
