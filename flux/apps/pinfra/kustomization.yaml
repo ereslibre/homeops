@@ -5,4 +5,5 @@ resources:
   - home-assistant
   - pihole
   - registry
+  - shiori
   - unifi
