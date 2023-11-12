@@ -12,3 +12,16 @@ spec:
       main:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
+        ingressClassName: nginx
+        tls:
+          - hosts:
+              - shiori.ereslibre.net
+            secretName: shiori-ereslibre-net-cert
+        hosts:
+          - host: shiori.ereslibre.net
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: shiori
+                  port: 10098
