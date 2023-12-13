@@ -7,4 +7,4 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: nuc-3.ereslibre.net
 spec:
   type: ExternalName
-  externalName: 10.0.10.10
+  externalName: 10.0.4.32
