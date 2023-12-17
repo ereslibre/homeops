@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - ../../base/home-assistant
 patchesStrategicMerge:
+  - configmap.yaml
   - ingress.yaml

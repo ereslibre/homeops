@@ -3,33 +3,7 @@ kind: ConfigMap
 metadata:
   name: configurations
 data:
-  automations.yaml: |
-    - id: christmas_lights_on
-      description: ""
-      mode: single
-      trigger:
-        - platform: time
-          at: "18:00:00"
-      condition: []
-      action:
-        - type: turn_on
-          device_id: da3f13e59eb6b70b9fd166e858c661d8
-          entity_id: 01a7896cc9711317c3f1dd2951840f8d
-          domain: light
-          brightness_pct: 100
-          flash: long
-    - id: christmas_lights_off
-      description: ""
-      mode: single
-      trigger:
-        - platform: time
-          at: "00:00:00"
-      condition: []
-      action:
-        - type: turn_off
-          device_id: da3f13e59eb6b70b9fd166e858c661d8
-          entity_id: 01a7896cc9711317c3f1dd2951840f8d
-          domain: light
+  automations.yaml: ""
   configuration.yaml: |
     # Loads default set of integrations. Do not remove.
     default_config:
