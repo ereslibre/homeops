@@ -20,5 +20,6 @@ spec:
       enabled: true
     serviceDns:
       type: LoadBalancer
+      externalTrafficPolicy: Local
     serviceWeb:
       type: ClusterIP
