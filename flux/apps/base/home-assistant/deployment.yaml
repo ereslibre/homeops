@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: home-assistant-app
-        image: "ghcr.io/home-assistant/home-assistant:2023.7"
+        image: "registry.ereslibre.net/homeops/home-assistant:2024.3"
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: null

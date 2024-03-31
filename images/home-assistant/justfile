@@ -1,0 +1,6 @@
+build tag:
+    docker build --build-arg="HOME_ASSISTANT_TAG={{tag}}" \
+      -t registry.ereslibre.net/homeops/home-assistant:{{tag}} .
+
+push tag: (build tag)
+    docker push registry.ereslibre.net/homeops/home-assistant:{{tag}}
