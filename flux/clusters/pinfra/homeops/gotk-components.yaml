@@ -7828,6 +7828,7 @@ spec:
         - --enable-leader-election
         - --storage-path=/data
         - --storage-adv-addr=source-controller.$(RUNTIME_NAMESPACE).svc.cluster.local.
+        - --helm-index-max-size=100000000
         env:
         - name: RUNTIME_NAMESPACE
           valueFrom:
