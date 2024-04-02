@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      version: ">=15.0.0 <16.0.0"
+      version: ">=16.0.0 <17.0.0"
   values:
     env:
       TZ: Europe/Madrid
