@@ -1,17 +1,14 @@
-# This is a specific service used for the inform-url of the devices. The main `unifi` service
-# should not expose all specified ports as LoadBalancer. Thus, we only need to expose this outside
-# of the main TLS-backed ingress.
 apiVersion: v1
 kind: Service
 metadata:
-  name: unifi-device-raw
+  name: unifi
   namespace: unifi
 spec:
   selector:
     app.kubernetes.io/instance: unifi
     app.kubernetes.io/name: unifi
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 8443
+      targetPort: 8443
       protocol: TCP
   type: LoadBalancer
