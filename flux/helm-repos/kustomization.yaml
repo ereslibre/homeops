@@ -6,5 +6,4 @@ resources:
   - ingress-nginx.yaml
   - jetstack.yaml
   - pihole.yaml
-  - truecharts.yaml
   - vmware-tanzu.yaml
