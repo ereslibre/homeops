@@ -3558,8 +3558,6 @@ spec:
         - --enable-leader-election
         - --storage-path=/data
         - --storage-adv-addr=source-controller.$(RUNTIME_NAMESPACE).svc.cluster.local.
-        # ereslibre: TrueCharts is just too big; to be removed
-        - --helm-index-max-size=100000000
         env:
         - name: RUNTIME_NAMESPACE
           valueFrom:
