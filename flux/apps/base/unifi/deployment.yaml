@@ -32,7 +32,6 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /unifi
-        args: ["--user", "unifi"]
       volumes:
       - name: data
         persistentVolumeClaim:
