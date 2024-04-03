@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unifi
+  namespace: unifi
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  rules:
+  - host: unifi.ereslibre.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: unifi
+            port:
+              name: unifi
+  tls:
+  - hosts:
+    - unifi.ereslibre.net
+    secretName: unifi-ereslibre-net-cert

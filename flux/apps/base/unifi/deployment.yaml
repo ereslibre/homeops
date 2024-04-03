@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi
+  namespace: unifi
+  labels:
+    app: unifi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unifi
+  template:
+    metadata:
+      labels:
+        app: unifi
+    spec:
+      containers:
+      - name: unifi
+        image: ghcr.io/jacobalberty/unifi-docker:v8
+        env:
+        - name: TZ
+          value: "Europe/Madrid"
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        - name: stun
+          containerPort: 3478
+          protocol: UDP
+        volumeMounts:
+        - name: data
+          mountPath: /unifi
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: unifi-data
