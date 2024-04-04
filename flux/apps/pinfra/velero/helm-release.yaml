@@ -23,8 +23,7 @@ spec:
         config:
           region: eu-west-1
       volumeSnapshotLocation:
-      - name: aws-default
-        provider: velero.io/aws
+      - provider: velero.io/aws
         config:
           region: eu-west-1
       schedules:
