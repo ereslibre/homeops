@@ -16,14 +16,12 @@ spec:
       retries: -1
   values:
     configuration:
-      provider: aws
+      provider: velero.io/aws
       backupStorageLocation:
-      - name: aws
-        default: true
-        provider: velero.io/aws
-         bucket: pinfra-backup
-         config:
-           region: eu-west-1
+      - provider: velero.io/aws
+        bucket: pinfra-backup
+        config:
+          region: eu-west-1
       volumeSnapshotLocation:
       - name: aws-default
         provider: velero.io/aws
