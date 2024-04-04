@@ -9,6 +9,7 @@ spec:
     - name: helm-repos
     - name: infra
     - name: sealed-secrets
+    - name: velero
   sourceRef:
     kind: GitRepository
     name: homeops
