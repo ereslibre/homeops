@@ -15,6 +15,19 @@ spec:
     remediation:
       retries: -1
   values:
+    configuration:
+      provider: aws
+      backupStorageLocation:
+        name: aws
+        provider: velero.io/aws
+        bucket: pinfra-backup
+        config:
+          region: eu-west-1
+      volumeSnapshotLocation:
+        name: aws-default
+        provider: velero.io/aws
+        config:
+          region: eu-west-1
     initContainers:
     - name: velero-plugin-for-aws
       image: velero/velero-plugin-for-aws:v1.9.0
