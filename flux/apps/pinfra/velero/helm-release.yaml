@@ -18,13 +18,13 @@ spec:
     configuration:
       provider: aws
       backupStorageLocation:
-        name: aws
+      - name: aws
         provider: velero.io/aws
-        bucket: pinfra-backup
-        config:
-          region: eu-west-1
+         bucket: pinfra-backup
+         config:
+           region: eu-west-1
       volumeSnapshotLocation:
-        name: aws-default
+      - name: aws-default
         provider: velero.io/aws
         config:
           region: eu-west-1
