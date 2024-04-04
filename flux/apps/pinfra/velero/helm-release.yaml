@@ -19,6 +19,7 @@ spec:
       provider: aws
       backupStorageLocation:
       - name: aws
+        default: true
         provider: velero.io/aws
          bucket: pinfra-backup
          config:
