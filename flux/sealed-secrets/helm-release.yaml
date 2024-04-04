@@ -5,6 +5,13 @@ metadata:
   namespace: kube-system
 spec:
   releaseName: sealed-secrets
+  install:
+    remediation:
+      retries: -1
+    replace: true
+  upgrade:
+    remediation:
+      retries: -1
   chart:
     spec:
       chart: sealed-secrets
