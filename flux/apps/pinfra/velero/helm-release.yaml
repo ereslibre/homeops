@@ -18,7 +18,6 @@ spec:
     image:
       tag: v1.13.1
     configuration:
-      provider: velero.io/aws
       backupStorageLocation:
       - provider: velero.io/aws
         bucket: pinfra-backup
