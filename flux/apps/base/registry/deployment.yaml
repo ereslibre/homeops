@@ -4,16 +4,16 @@ metadata:
   name: registry
   namespace: registry
   labels:
-    app: registry
+    app.kubernetes.io/name: registry
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: registry
+      app.kubernetes.io/name: registry
   template:
     metadata:
       labels:
-        app: registry
+        app.kubernetes.io/name: registry
     spec:
       containers:
       - name: registry

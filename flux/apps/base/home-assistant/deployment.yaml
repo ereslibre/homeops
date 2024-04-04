@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: home-assistant
+    app.kubernetes.io/name: home-assistant
   name: home-assistant
 spec:
   revisionHistoryLimit: 3
@@ -11,11 +11,11 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: home-assistant
+      app.kubernetes.io/name: home-assistant
   template:
     metadata:
       labels:
-        app: home-assistant
+        app.kubernetes.io/name: home-assistant
     spec:
       containers:
       - name: home-assistant-app

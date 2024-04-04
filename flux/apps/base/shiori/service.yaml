@@ -5,7 +5,7 @@ metadata:
   namespace: shiori
 spec:
   selector:
-    app: shiori
+    app.kubernetes.io/name: shiori
   ports:
   - name: shiori
     port: 8080

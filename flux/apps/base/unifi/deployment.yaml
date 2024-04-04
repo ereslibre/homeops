@@ -4,16 +4,16 @@ metadata:
   name: unifi
   namespace: unifi
   labels:
-    app: unifi
+    app.kubernetes.io/name: unifi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: unifi
+      app.kubernetes.io/name: unifi
   template:
     metadata:
       labels:
-        app: unifi
+        app.kubernetes.io/name: unifi
     spec:
       containers:
       - name: unifi
