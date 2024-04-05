@@ -4,6 +4,7 @@ metadata:
   name: unifi-data
   namespace: unifi
   annotations:
+    volumeType: local
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:

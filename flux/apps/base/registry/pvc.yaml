@@ -4,6 +4,7 @@ metadata:
   name: registry-data
   namespace: registry
   annotations:
+    volumeType: local
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:

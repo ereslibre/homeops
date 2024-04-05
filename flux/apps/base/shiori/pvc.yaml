@@ -4,6 +4,7 @@ metadata:
   name: shiori-data
   namespace: shiori
   annotations:
+    volumeType: local
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:

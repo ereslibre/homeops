@@ -19,6 +19,7 @@ spec:
     persistentVolumeClaim:
       enabled: true
       annotations:
+        volumeType: local
         kustomize.toolkit.fluxcd.io/prune: disabled
     serviceDns:
       type: LoadBalancer

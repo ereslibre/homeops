@@ -4,6 +4,7 @@ metadata:
   name: home-assistant-config-root
   namespace: home-assistant
   annotations:
+    volumeType: local
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
