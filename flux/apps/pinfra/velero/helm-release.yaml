@@ -36,3 +36,14 @@ spec:
       volumeMounts:
         - mountPath: /target
           name: plugins
+    schedules:
+      backup:
+        disabled: false
+        schedule: "0 0 * * 0"
+        useOwnerReferencesInBackup: false
+        template:
+          ttl: "240h"
+          storageLocation: default
+          snapshotVolumes: true
+          volumeSnapshotLocations:
+            - default
