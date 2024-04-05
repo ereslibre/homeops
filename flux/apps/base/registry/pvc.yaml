@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: registry-data
   namespace: registry
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
   - ReadWriteOnce

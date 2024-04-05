@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: unifi-data
   namespace: unifi
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
   - ReadWriteOnce
