@@ -27,7 +27,7 @@ spec:
         - name: data
           mountPath: /var/lib/registry
       - name: registry-ui
-        image: joxit/docker-registry-ui:2.5.0
+        image: joxit/docker-registry-ui:2.5.7
         ports:
         - containerPort: 80
         env:
