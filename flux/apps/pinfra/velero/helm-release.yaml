@@ -17,6 +17,8 @@ spec:
   values:
     image:
       tag: v1.13.1
+    credentials:
+      existingSecret: credentials
     configuration:
       backupStorageLocation:
       - provider: velero.io/aws
