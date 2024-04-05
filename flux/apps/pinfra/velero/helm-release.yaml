@@ -21,6 +21,8 @@ spec:
       backupStorageLocation:
       - provider: velero.io/aws
         bucket: pinfra-backup
+        credential:
+          name: credentials
         config:
           region: eu-west-1
       volumeSnapshotLocation:
