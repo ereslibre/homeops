@@ -20,6 +20,7 @@ spec:
     credentials:
       existingSecret: credentials
     configuration:
+      snapshotsEnabled: false
       backupStorageLocation:
       - provider: aws
         bucket: pinfra-backup
