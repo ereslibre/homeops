@@ -1,0 +1,6 @@
+generate release="6.3":
+    git clone https://github.com/kubernetes-csi/external-snapshotter/
+    cd ./external-snapshotter && git checkout release-{{release}}
+    cd ./external-snapshotter && kubectl kustomize client/config/crd > crds.yaml
+    cd ./external-snapshotter && kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller > deployment.yaml
+    rm -rf external-snapshotter
