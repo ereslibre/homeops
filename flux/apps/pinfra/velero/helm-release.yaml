@@ -19,8 +19,8 @@ spec:
       tag: v1.13.1
     credentials:
       existingSecret: credentials
+    snapshotsEnabled: false
     configuration:
-      snapshotsEnabled: false
       backupStorageLocation:
       - provider: aws
         bucket: pinfra-backup
