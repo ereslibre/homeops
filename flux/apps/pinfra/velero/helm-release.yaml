@@ -20,13 +20,15 @@ spec:
     credentials:
       existingSecret: credentials
     configuration:
+      defaultSnapshotMoveData: true
+      features: EnableCSI
       backupStorageLocation:
-      - provider: velero.io/aws
+      - provider: aws
         bucket: pinfra-backup
         config:
           region: eu-west-1
       volumeSnapshotLocation:
-      - provider: velero.io/aws
+      - provider: aws
         config:
           region: eu-west-1
     initContainers:
@@ -45,5 +47,3 @@ spec:
           ttl: "240h"
           storageLocation: default
           snapshotVolumes: true
-          volumeSnapshotLocations:
-            - default
