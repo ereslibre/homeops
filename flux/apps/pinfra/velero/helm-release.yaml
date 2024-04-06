@@ -20,7 +20,6 @@ spec:
     credentials:
       existingSecret: credentials
     configuration:
-      defaultSnapshotMoveData: true
       backupStorageLocation:
       - provider: aws
         bucket: pinfra-backup
