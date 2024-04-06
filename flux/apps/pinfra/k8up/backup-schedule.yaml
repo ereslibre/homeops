@@ -4,6 +4,15 @@ metadata:
   name: k8up-backup
   namespace: k8up
 spec:
+  backend:
+    s3:
+      bucket: pinfra-backup
+      accessKeyIDSecretRef:
+        name: credentials
+        key: access-key-id
+      secretAccessKeySecretRef:
+        name: credentials
+        key: secret-access-key
   backup:
     schedule: '30 0 * * 0'
     failedJobsHistoryLimit: 2
