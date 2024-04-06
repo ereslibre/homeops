@@ -21,7 +21,6 @@ spec:
       existingSecret: credentials
     configuration:
       defaultSnapshotMoveData: true
-      features: EnableCSI
       backupStorageLocation:
       - provider: aws
         bucket: pinfra-backup
