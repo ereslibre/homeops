@@ -18,13 +18,13 @@ spec:
         name: backup-credentials
         key: secret-access-key
   backup:
-    schedule: '30 0 * * 0'
+    schedule: '30 0 * * 1'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
   check:
-    schedule: '0 3 * * 0'
+    schedule: '0 3 * * 1'
   prune:
-    schedule: '0 5 * * 0'
+    schedule: '0 5 * * 1'
     retention:
       keepLast: 5
       keepDaily: 14
