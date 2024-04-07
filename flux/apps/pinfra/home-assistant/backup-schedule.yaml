@@ -5,6 +5,9 @@ metadata:
   namespace: home-assistant
 spec:
   backend:
+    repoPasswordSecretRef:
+      name: restic-credentials
+      key: password
     s3:
       bucket: pinfra-backup
       accessKeyIDSecretRef:

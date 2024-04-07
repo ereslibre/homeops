@@ -4,6 +4,7 @@ resources:
   - ../../base/home-assistant
   - backup-sealed-secret.yaml
   - backup-schedule.yaml
+  - restic-sealed-secret.yaml
 patchesStrategicMerge:
   - configmap.yaml
   - ingress.yaml
