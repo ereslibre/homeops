@@ -1,0 +1,14 @@
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: k8up-backup
+spec:
+  backend:
+    s3:
+      bucket: pinfra-backup
+      accessKeyIDSecretRef:
+        name: credentials
+        key: access-key-id
+      secretAccessKeySecretRef:
+        name: credentials
+        key: secret-access-key

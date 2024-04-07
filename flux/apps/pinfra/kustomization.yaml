@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - external-dns
   - home-assistant
-  - k8up
   - pihole
   - registry
   - shiori

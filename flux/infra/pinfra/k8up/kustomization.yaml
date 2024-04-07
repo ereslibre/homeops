@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
   - ../../base/k8up
   - sealed-secret.yaml
-  - backup-schedule.yaml
 patchesStrategicMerge:
   - helm-release.yaml
