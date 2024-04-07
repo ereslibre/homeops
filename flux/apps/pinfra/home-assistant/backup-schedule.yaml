@@ -9,7 +9,8 @@ spec:
       name: restic-credentials
       key: password
     s3:
-      bucket: pinfra-backup
+      endpoint: s3.eu-west-1.amazonaws.com
+      bucket: pinfra-home-assistant-backup
       accessKeyIDSecretRef:
         name: backup-credentials
         key: access-key-id
