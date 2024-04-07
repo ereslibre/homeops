@@ -23,6 +23,10 @@ spec:
         - hosts:
             - pihole.ereslibre.net
           secretName: pihole-ereslibre-net-cert
+    persistentVolumeClaim:
+      enabled: true
+      annotations:
+        k8up.io/backup: "true"
   postRenderers:
     - kustomize:
         patchesStrategicMerge:
