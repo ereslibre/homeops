@@ -3,6 +3,15 @@ kind: Schedule
 metadata:
   name: k8up-backup
 spec:
+  backend:
+    s3:
+      bucket: pinfra-backup
+      accessKeyIDSecretRef:
+        name: backup-credentials
+        key: access-key-id
+      secretAccessKeySecretRef:
+        name: backup-credentials
+        key: secret-access-key
   backup:
     schedule: '30 0 * * 0'
     failedJobsHistoryLimit: 2
