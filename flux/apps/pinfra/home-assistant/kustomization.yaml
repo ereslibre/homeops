@@ -7,4 +7,3 @@ patchesStrategicMerge:
   - backup-schedule.yaml
   - configmap.yaml
   - ingress.yaml
-  - sealed-secret.yaml
