@@ -8,6 +8,10 @@ spec:
     spec:
       version: ">=4.10.0 <4.11.0"
   values:
+    ports:
+      mqtts: 8883
+    targetPorts:
+      mqtts: 8883
     controller:
       extraArgs:
         tcp-services-configmap: "$(POD_NAMESPACE)/tcp-services"

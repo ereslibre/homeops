@@ -4,4 +4,4 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
-  8883: "mosquitto/mosquitto:8883"
+  "8883": "mosquitto/mosquitto:8883"
