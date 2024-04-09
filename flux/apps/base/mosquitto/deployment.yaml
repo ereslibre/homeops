@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  namespace: mosquitto
+  labels:
+    app.kubernetes.io/name: mosquitto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mosquitto
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mosquitto
+    spec:
+      containers:
+      - name: mosquitto
+        image: eclipse-mosquitto:2.0.18-openssl
+        ports:
+        - containerPort: 8883
+        - containerPort: 9001
+      volumes:
+      - name: config
+        configMap:
+          name: mosquitto-config
+      - name: certs
+        secret:
+          secretName: mosquitto-certs
