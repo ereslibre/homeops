@@ -8,4 +8,7 @@ spec:
   selector:
     app.kubernetes.io/name: mosquitto
   ports:
-    - port: 8883
+    - name: mqtts
+      port: 8883
+      targetPort: 8883
+      protocol: TCP
