@@ -10,6 +10,6 @@ spec:
   values:
     controller:
       extraArgs:
-        tcp:
-          "8883": "mosquitto/mosquitto:8883"
         tcp-services-configmap: "$(POD_NAMESPACE)/tcp-services"
+    tcp:
+      "8883": "mosquitto/mosquitto:8883"
