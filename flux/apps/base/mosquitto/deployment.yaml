@@ -16,15 +16,21 @@ spec:
         app.kubernetes.io/name: mosquitto
     spec:
       containers:
-      - name: mosquitto
-        image: eclipse-mosquitto:2.0.18-openssl
-        ports:
-        - containerPort: 8883
-        - containerPort: 9001
+        - name: mosquitto
+          image: eclipse-mosquitto:2.0.18-openssl
+          ports:
+            - containerPort: 8883
+            - containerPort: 9001
+          volumeMounts:
+            - mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+              name: config
+            - mountPath: /mosquitto/certs/
+              name: certs
       volumes:
-      - name: config
-        configMap:
-          name: mosquitto-config
-      - name: certs
-        secret:
-          secretName: mosquitto-certs
+        - name: config
+          configMap:
+            name: mosquitto-config
+        - name: certs
+          secret:
+            secretName: mosquitto-certs
