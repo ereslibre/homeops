@@ -6,11 +6,6 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
-  ingressClassName: nginx
-  tls:
-  - hosts:
-    - mosquitto.ereslibre.net
-    secretName: mosquitto-certs
   rules:
   - host: mosquitto.ereslibre.net
     http:
@@ -22,3 +17,7 @@ spec:
             name: mosquitto
             port:
               number: 8883
+  tls:
+  - hosts:
+    - mosquitto.ereslibre.net
+    secretName: mosquitto-certs
