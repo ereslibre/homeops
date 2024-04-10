@@ -14,7 +14,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: mosquitto
+            name: mosquitto-mqtts
             port:
               number: 8883
   tls:
