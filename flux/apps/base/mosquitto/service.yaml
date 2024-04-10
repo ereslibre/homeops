@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mosquitto-mqtts
+  name: mosquitto-mqtt
   namespace: mosquitto
 spec:
   type: ClusterIP
   selector:
     app.kubernetes.io/name: mosquitto
   ports:
-    - name: mqtts
+    - name: mqtt
       port: 8883
       targetPort: 8883
       protocol: TCP
