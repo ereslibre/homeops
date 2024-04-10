@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: mosquitto
   namespace: mosquitto
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   rules:
   - host: mosquitto.ereslibre.net
@@ -17,7 +15,3 @@ spec:
             name: mosquitto-mqtt
             port:
               number: 8883
-  tls:
-  - hosts:
-    - mosquitto.ereslibre.net
-    secretName: mosquitto-certs
