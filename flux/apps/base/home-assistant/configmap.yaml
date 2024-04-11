@@ -16,6 +16,10 @@ data:
       ip_ban_enabled: false
       login_attempts_threshold: 5
 
+    # mDNS reflector: tell homekit the advertise IP address
+    homekit:
+      advertise_ip: "10.0.4.31"
+
     # Load frontend themes from the themes folder
     frontend:
       themes: !include_dir_merge_named themes
