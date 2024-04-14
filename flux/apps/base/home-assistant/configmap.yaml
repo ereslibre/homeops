@@ -8,8 +8,6 @@ data:
     # Loads default set of integrations. Do not remove.
     default_config:
 
-    bluetooth:
-
     # pinfra specific settings
     http:
       use_x_forwarded_for: true
