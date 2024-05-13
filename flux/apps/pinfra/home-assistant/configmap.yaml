@@ -75,7 +75,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Air monitor"
+            name: "Office Air monitor"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 9a0db1bc69a41507a757c5d222d4a845dc244d82
@@ -195,7 +195,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Air monitor"
+            name: "Terrace Air monitor"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 6fabf26f-4d08-4352-8923-df0dace0ce9c
@@ -315,7 +315,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Air monitor"
+            name: "Living Room Air monitor"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 6fabf26f-4d08-4352-8923-df0dace0ce9c
