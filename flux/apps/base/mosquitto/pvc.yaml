@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: shiori-data
-  namespace: shiori
+  name: mosquitto-data
+  namespace: mosquitto
   annotations:
     volumeType: local
     kustomize.toolkit.fluxcd.io/prune: disabled
