@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: mosquitto
-          image: eclipse-mosquitto:2.0.18-openssl
+          image: eclipse-mosquitto:2.0.18
           ports:
             - containerPort: 8883
             - containerPort: 9001
@@ -25,17 +25,12 @@ spec:
             - mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf
               name: config
-            - mountPath: /mosquitto/certs
-              name: certs
             - name: data
               mountPath: /mosquitto/data
       volumes:
         - name: config
           configMap:
             name: mosquitto-config
-        - name: certs
-          secret:
-            secretName: mosquitto-certs
         - name: data
           persistentVolumeClaim:
             claimName: mosquitto-data
