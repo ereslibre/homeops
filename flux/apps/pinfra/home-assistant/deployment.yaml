@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: home-assistant
+  name: home-assistant
+spec:
+  template:
+    spec:
+      volumes:
+        - name: automations
+          configMap:
+            name: automations
+            items:
+            - key: general.yaml
+              path: general.yaml
+            - key: office.yaml
+              path: office.yaml

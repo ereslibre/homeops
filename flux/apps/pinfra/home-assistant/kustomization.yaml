@@ -6,5 +6,7 @@ resources:
   - backup-schedule.yaml
   - restic-sealed-secret.yaml
 patchesStrategicMerge:
-  - configmap.yaml
+  - configurations.yaml
+  - deployment.yaml
+  - automations.yaml
   - ingress.yaml

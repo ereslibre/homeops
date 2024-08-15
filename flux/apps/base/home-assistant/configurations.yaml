@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: configurations
 data:
-  automations.yaml: ""
   configuration.yaml: ""
   scenes.yaml: ""
   scripts.yaml: ""
