@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: unifi
-        image: ghcr.io/jacobalberty/unifi-docker:v8
+        image: ghcr.io/jacobalberty/unifi-docker:v8.4.59
         env:
         - name: TZ
           value: "Europe/Madrid"
