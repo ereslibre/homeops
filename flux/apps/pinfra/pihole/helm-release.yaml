@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      version: "=2.23.0"
+      version: "=2.26.1"
   values:
     virtualHost: pihole.ereslibre.net
     DNS1: "10.0.1.1"
