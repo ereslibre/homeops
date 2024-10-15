@@ -8,6 +8,9 @@ data:
     # Loads default set of integrations. Do not remove.
     default_config:
 
+    # Enable API
+    api:
+
     # pinfra specific settings
     http:
       use_x_forwarded_for: true
