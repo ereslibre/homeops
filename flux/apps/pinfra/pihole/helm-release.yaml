@@ -27,6 +27,13 @@ spec:
       enabled: true
       annotations:
         k8up.io/backup: "true"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
   postRenderers:
     - kustomize:
         patchesStrategicMerge:
