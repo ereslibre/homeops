@@ -55,8 +55,6 @@ spec:
         volumeMounts:
           - name: config-root
             mountPath: /config
-          - name: automations
-            mountPath: /config/automations
           - name: configurations
             mountPath: /config/configuration.yaml
             subPath: configuration.yaml
@@ -71,12 +69,6 @@ spec:
         - name: config-root
           persistentVolumeClaim:
             claimName: home-assistant-config-root
-        - name: automations
-          configMap:
-            name: automations
-            items:
-            - key: general.yaml
-              path: general.yaml
         - name: configurations
           configMap:
             name: configurations

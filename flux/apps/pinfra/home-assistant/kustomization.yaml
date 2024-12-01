@@ -7,6 +7,4 @@ resources:
   - restic-sealed-secret.yaml
 patchesStrategicMerge:
   - configurations.yaml
-  - deployment.yaml
-  - automations.yaml
   - ingress.yaml
