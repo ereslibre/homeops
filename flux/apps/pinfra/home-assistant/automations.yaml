@@ -16,8 +16,7 @@ data:
       condition: []
       action:
         - type: turn_on
-          device_id: da3f13e59eb6b70b9fd166e858c661d8
-          entity_id: 01a7896cc9711317c3f1dd2951840f8d
+          device_id: 74a4ba1765b3ce50543f8bf7694aafee
           domain: light
           brightness_pct: 100
           flash: long
@@ -31,6 +30,5 @@ data:
       condition: []
       action:
         - type: turn_off
-          device_id: da3f13e59eb6b70b9fd166e858c661d8
-          entity_id: 01a7896cc9711317c3f1dd2951840f8d
+          device_id: 74a4ba1765b3ce50543f8bf7694aafee
           domain: light
