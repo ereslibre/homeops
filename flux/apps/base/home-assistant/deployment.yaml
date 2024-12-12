@@ -65,7 +65,7 @@ spec:
             mountPath: /config/scripts.yaml
             subPath: scripts.yaml
       - name: home-assistant-whisper
-        image: rhasspy/wyoming-whisper
+        image: rhasspy/wyoming-whisper:2.4.0
         imagePullPolicy: IfNotPresent
         args: ['--model', 'tiny-int8', '--language', 'es']
         securityContext:
@@ -75,7 +75,7 @@ spec:
             containerPort: 10300
             protocol: TCP
       - name: home-assistant-piper
-        image: rhasspy/wyoming-piper
+        image: rhasspy/wyoming-piper:1.5.0
         imagePullPolicy: IfNotPresent
         args: ['--voice', 'es_ES-davefx-medium']
         securityContext:
