@@ -33,7 +33,7 @@ data:
 
     mqtt:
       sensor:
-        - name: "Office CO2"
+        - name: "CO2 despacho"
           object_id: office_air_monitor_co2
           device_class: carbon_dioxide
           unit_of_measurement: "ppm"
@@ -49,11 +49,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Office Air monitor"
+            name: "Monitor de aire despacho"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 9a0db1bc69a41507a757c5d222d4a845dc244d82
-        - name: "Office PM2.5"
+        - name: "PM2.5 despacho"
           object_id: office_air_monitor_pm25
           device_class: pm25
           state_topic: "homeassistant/qingping/582D34701BA9/up"
@@ -69,11 +69,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Office Air monitor"
+            name: "Monitor de aire despacho"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: b7e9459ef047905d96918d8e247b0c3dd61b7cc8
-        - name: "Office PM10"
+        - name: "PM10 despacho"
           object_id: office_air_monitor_pm10
           device_class: pm10
           unit_of_measurement: "µg/m³"
@@ -89,11 +89,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Office Air monitor"
+            name: "Monitor de aire despacho"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 4beba1f55c9fc38b528353a3eeae9df9db9eae0f
-        - name: "Office TVOC"
+        - name: "TVOC despacho"
           object_id: office_air_monitor_tvoc
           device_class: volatile_organic_compounds
           unit_of_measurement: "mg/m³"
@@ -109,11 +109,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Office Air monitor"
+            name: "Monitor de aire despacho"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 049dba2512f7e141b094799e308d587b1e199174
-        - name: "Office Humidity"
+        - name: "Humedad despacho"
           object_id: office_air_monitor_humidity
           device_class: humidity
           state_topic: "homeassistant/qingping/582D34701BA9/up"
@@ -129,12 +129,12 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Office Air monitor"
+            name: "Monitor de aire despacho"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: fca28b722b2d263cdda7906b1f1fda67366c9f42
         - object_id: office_air_monitor_temperature
-          name: "Office Temperature"
+          name: "Temperatura despacho"
           device_class: temperature
           unit_of_measurement: "°C"
           state_topic: "homeassistant/qingping/582D34701BA9/up"
@@ -149,11 +149,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Office Air monitor"
+            name: "Monitor de aire despacho"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: c70b69d6dc1ff5ef3c1e86ecca3e547ae11c3c66
-        - name: "Terrace CO2"
+        - name: "CO2 terraza"
           object_id: terrace_air_monitor_co2
           device_class: carbon_dioxide
           unit_of_measurement: "ppm"
@@ -169,11 +169,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Terrace Air monitor"
+            name: "Monitor de aire terraza"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 6fabf26f-4d08-4352-8923-df0dace0ce9c
-        - name: "Terrace PM2.5"
+        - name: "PM2.5 terraza"
           object_id: terrace_air_monitor_pm25
           device_class: pm25
           state_topic: "homeassistant/qingping/582D34014261/up"
@@ -189,11 +189,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Terrace Air monitor"
+            name: "Monitor de aire terraza"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 173f1958-7917-4707-8e0b-5e6ab38ba7b9
-        - name: "Terrace PM10"
+        - name: "PM10 terraza"
           object_id: terrace_air_monitor_pm10
           device_class: pm10
           unit_of_measurement: "µg/m³"
@@ -209,11 +209,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Terrace Air monitor"
+            name: "Monitor de aire terraza"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: d190357e-ae23-42e3-a34e-fff7b55a6b46
-        - name: "Terrace TVOC"
+        - name: "TVOC terraza"
           object_id: terrace_air_monitor_tvoc
           device_class: volatile_organic_compounds
           unit_of_measurement: "mg/m³"
@@ -229,11 +229,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Terrace Air monitor"
+            name: "Monitor de aire terraza"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: a2dba3fa-50cb-4e8f-ae3c-e8910e791276
-        - name: "Terrace Humidity"
+        - name: "Humedad terraza"
           object_id: terrace_air_monitor_humidity
           device_class: humidity
           state_topic: "homeassistant/qingping/582D34014261/up"
@@ -249,12 +249,12 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Terrace Air monitor"
+            name: "Monitor de aire terraza"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 8651a295-db74-4ac4-9dd8-89ea21c711e1
         - object_id: terrace_air_monitor_temperature
-          name: "Terrace Temperature"
+          name: "Temperatura terraza"
           device_class: temperature
           unit_of_measurement: "°C"
           state_topic: "homeassistant/qingping/582D34014261/up"
@@ -269,11 +269,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Terrace Air monitor"
+            name: "Monitor de aire terraza"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 9970aab8-9c0d-4983-848f-0c368dd8b04b
-        - name: "Living Room CO2"
+        - name: "CO2 salón"
           object_id: living_room_air_monitor_co2
           device_class: carbon_dioxide
           unit_of_measurement: "ppm"
@@ -289,11 +289,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Living Room Air monitor"
+            name: "Monitor de aire salón"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 848adb96-7b50-4b7c-a940-6223df7e1168
-        - name: "Living Room PM2.5"
+        - name: "PM2.5 salón"
           object_id: living_room_air_monitor_pm25
           device_class: pm25
           state_topic: "homeassistant/qingping/582D3401491F/up"
@@ -309,11 +309,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Living Room Air monitor"
+            name: "Monitor de aire salón"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 4e7d8563-798f-4313-869d-2b597377fe8f
-        - name: "Living Room PM10"
+        - name: "PM10 salón"
           object_id: living_room_air_monitor_pm10
           device_class: pm10
           unit_of_measurement: "µg/m³"
@@ -329,11 +329,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Living Room Air monitor"
+            name: "Monitor de aire salón"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 837ab652-77f8-43a0-9aaa-db3abfad206f
-        - name: "Living Room TVOC"
+        - name: "TVOC salón"
           object_id: living_room_air_monitor_tvoc
           device_class: volatile_organic_compounds
           unit_of_measurement: "mg/m³"
@@ -349,11 +349,11 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Living Room Air monitor"
+            name: "Monitor de aire salón"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: cf70fbfa-31c4-4585-8786-6109342eb24d
-        - name: "Living Room Humidity"
+        - name: "Humedad salón"
           object_id: living_room_air_monitor_humidity
           device_class: humidity
           state_topic: "homeassistant/qingping/582D3401491F/up"
@@ -369,12 +369,12 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Living Room Air monitor"
+            name: "Monitor de aire salón"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: b887856a-22da-424e-8d7b-00b71250630a
         - object_id: living_room_air_monitor_temperature
-          name: "Living Room Temperature"
+          name: "Temperatura salón"
           device_class: temperature
           unit_of_measurement: "°C"
           state_topic: "homeassistant/qingping/582D3401491F/up"
@@ -389,7 +389,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Living Room Air monitor"
+            name: "Monitor de aire salón"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: dd90764f-d244-4285-9987-36a94b456776
