@@ -49,7 +49,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Monitor de aire despacho"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 9a0db1bc69a41507a757c5d222d4a845dc244d82
@@ -69,7 +69,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Monitor de aire despacho"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: b7e9459ef047905d96918d8e247b0c3dd61b7cc8
@@ -89,7 +89,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Monitor de aire despacho"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 4beba1f55c9fc38b528353a3eeae9df9db9eae0f
@@ -109,7 +109,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Monitor de aire despacho"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 049dba2512f7e141b094799e308d587b1e199174
@@ -129,7 +129,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Monitor de aire despacho"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: fca28b722b2d263cdda7906b1f1fda67366c9f42
@@ -149,7 +149,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34701BA9"]
-            name: "Monitor de aire despacho"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: c70b69d6dc1ff5ef3c1e86ecca3e547ae11c3c66
@@ -169,7 +169,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Monitor de aire terraza"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 6fabf26f-4d08-4352-8923-df0dace0ce9c
@@ -189,7 +189,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Monitor de aire terraza"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 173f1958-7917-4707-8e0b-5e6ab38ba7b9
@@ -209,7 +209,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Monitor de aire terraza"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: d190357e-ae23-42e3-a34e-fff7b55a6b46
@@ -229,7 +229,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Monitor de aire terraza"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: a2dba3fa-50cb-4e8f-ae3c-e8910e791276
@@ -249,7 +249,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Monitor de aire terraza"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 8651a295-db74-4ac4-9dd8-89ea21c711e1
@@ -269,7 +269,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D34014261"]
-            name: "Monitor de aire terraza"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 9970aab8-9c0d-4983-848f-0c368dd8b04b
@@ -289,7 +289,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Monitor de aire salón"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 848adb96-7b50-4b7c-a940-6223df7e1168
@@ -309,7 +309,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Monitor de aire salón"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 4e7d8563-798f-4313-869d-2b597377fe8f
@@ -329,7 +329,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Monitor de aire salón"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: 837ab652-77f8-43a0-9aaa-db3abfad206f
@@ -349,7 +349,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Monitor de aire salón"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: cf70fbfa-31c4-4585-8786-6109342eb24d
@@ -369,7 +369,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Monitor de aire salón"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: b887856a-22da-424e-8d7b-00b71250630a
@@ -389,7 +389,7 @@ data:
                 {{ "true" if value_json else "false" }}
           device:
             identifiers: ["582D3401491F"]
-            name: "Monitor de aire salón"
+            name: "Monitor de aire"
             model: "CGS1"
             manufacturer: "qingping"
           unique_id: dd90764f-d244-4285-9987-36a94b456776
