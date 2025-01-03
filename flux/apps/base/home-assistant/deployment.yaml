@@ -67,7 +67,7 @@ spec:
       - name: home-assistant-whisper
         image: rhasspy/wyoming-whisper:2.4.0
         imagePullPolicy: IfNotPresent
-        args: ['--model', 'large-v3', '--language', 'es']
+        args: ['--model', 'distil-large-v3', '--language', 'es']
         securityContext:
           privileged: null
         ports:
