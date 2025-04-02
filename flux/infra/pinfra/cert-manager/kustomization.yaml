@@ -3,5 +3,18 @@ kind: Kustomization
 resources:
   - ../../base/cert-manager
   - sealed-secret.yaml
-patchesStrategicMerge:
-  - helm-release.yaml
+patches:
+  - patch: |-
+      apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      metadata:
+        name: cert-manager
+        namespace: cert-manager
+      spec:
+        chart:
+          spec:
+            version: "=>1.13.5 <1.14.0"
+    target:
+      kind: HelmRelease
+      name: cert-manager
+      namespace: cert-manager
