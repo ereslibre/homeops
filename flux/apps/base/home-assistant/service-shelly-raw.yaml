@@ -1,0 +1,15 @@
+# This is a specific service used for the shelly gen 1 devices using
+# the CoIoT protocol
+apiVersion: v1
+kind: Service
+metadata:
+  name: shelly-coiot
+  namespace: home-assistant
+spec:
+  selector:
+    app.kubernetes.io/name: home-assistant
+  ports:
+    - port: 5683
+      targetPort: 5683
+      protocol: UDP
+  type: LoadBalancer
