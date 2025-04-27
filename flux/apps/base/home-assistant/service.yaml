@@ -12,3 +12,7 @@ spec:
     targetPort: http
     protocol: TCP
     name: http
+  - port: 5683
+    targetPort: coiot
+    protocol: UDP
+    name: coiot
