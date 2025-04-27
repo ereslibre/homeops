@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../../base/ingress-nginx
   - tcp-services.yaml
+  - udp-services.yaml
 patches:
   - patch: |-
       apiVersion: helm.toolkit.fluxcd.io/v2
@@ -18,8 +19,11 @@ patches:
           controller:
             extraArgs:
               tcp-services-configmap: "$(POD_NAMESPACE)/tcp-services"
+              udp-services-configmap: "$(POD_NAMESPACE)/udp-services"
           tcp:
-            "8883": "mosquitto/mosquitto:8883"
+            "8883": "mosquitto/mosquitto-mqtt:8883"
+          udp:
+            "5683": "home-assistant/shelly-coiot:5683"
     target:
       kind: HelmRelease
       name: ingress-nginx
