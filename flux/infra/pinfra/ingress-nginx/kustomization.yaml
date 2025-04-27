@@ -20,10 +20,6 @@ patches:
             extraArgs:
               tcp-services-configmap: "$(POD_NAMESPACE)/tcp-services"
               udp-services-configmap: "$(POD_NAMESPACE)/udp-services"
-          tcp:
-            "8883": "mosquitto/mosquitto-mqtt:8883"
-          udp:
-            "5683": "home-assistant/shelly-coiot:5683"
     target:
       kind: HelmRelease
       name: ingress-nginx
