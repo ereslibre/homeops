@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -z "${GITHUB_TOKEN}" ]; then
-    echo "set the GITHUB_TOKEN envvar to a Personal Access Token (PAT) of your account in order to bootstrap. This token will be used by flux to add a deploy key to the homeops repository"
+    echo "set the GITHUB_TOKEN envvar to a Personal Access Token (PAT) of your account in order to bootstrap. This token will be used by flux for adding a deploy key to the homeops repository"
     exit 1
 fi
 
