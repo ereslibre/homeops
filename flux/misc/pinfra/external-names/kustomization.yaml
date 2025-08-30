@@ -8,3 +8,4 @@ resources:
   - nuc-2.yaml
   - nuc-3.yaml
   - synology.yaml
+  - teslamate.yaml
