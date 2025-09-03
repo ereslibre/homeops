@@ -9,3 +9,4 @@ resources:
   - nuc-3.yaml
   - synology.yaml
   - teslamate.yaml
+  - teslamate-grafana.yaml
