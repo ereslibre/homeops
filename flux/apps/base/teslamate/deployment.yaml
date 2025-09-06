@@ -22,7 +22,7 @@ spec:
         - containerPort: 4000
         envFrom:
         - secretRef:
-          name: teslamate
+            name: teslamate
         volumeMounts:
         - name: teslamate-import
           mountPath: /opt/app/import
@@ -30,7 +30,7 @@ spec:
         image: postgres:17-trixie
         envFrom:
         - secretRef:
-          name: teslamate-data
+            name: teslamate-data
         volumeMounts:
         - name: teslamate-data
           mountPath: /var/lib/postgresql/data
