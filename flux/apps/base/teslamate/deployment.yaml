@@ -30,7 +30,7 @@ spec:
         image: postgres:17-trixie
         envFrom:
         - secretRef:
-            name: teslamate-data
+            name: teslamate-db
         volumeMounts:
         - name: teslamate-data
           mountPath: /var/lib/postgresql/data
