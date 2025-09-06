@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teslamate
+  namespace: teslamate
+  labels:
+    app.kubernetes.io/name: teslamate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: teslamate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: teslamate
+    spec:
+      containers:
+      - name: teslamate
+        image: teslamate/teslamate:2.1
+        ports:
+        - containerPort: 4000
+        envFrom:
+        - secretRef:
+          name: teslamate
+        volumeMounts:
+        - name: teslamate-import
+          mountPath: /opt/app/import
+      - name: postgres
+        image: postgres:17-trixie
+        envFrom:
+        - secretRef:
+          name: teslamate-data
+        volumeMounts:
+        - name: teslamate-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: teslamate-import
+        persistentVolumeClaim:
+          claimName: teslamate-import
+      - name: teslamate-data
+        persistentVolumeClaim:
+          claimName: teslamate-data
