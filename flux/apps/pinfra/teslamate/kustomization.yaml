@@ -2,3 +2,32 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base/teslamate
+patches:
+  - patch: |-
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: teslamate
+        namespace: teslamate
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+      spec:
+        rules:
+        - host: teslamate.ereslibre.net
+          http:
+            paths:
+            - pathType: Prefix
+              path: /
+              backend:
+                service:
+                  name: teslamate
+                  port:
+                    name: teslamate
+        tls:
+        - hosts:
+          - teslamate.ereslibre.net
+          secretName: teslamate-ereslibre-net-cert
+    target:
+      kind: Ingress
+      name: teslamate
+      namespace: teslamate
