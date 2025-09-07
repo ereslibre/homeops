@@ -34,6 +34,13 @@ spec:
         volumeMounts:
         - name: teslamate-data
           mountPath: /var/lib/postgresql/data
+      - name: grafana
+        image: teslamate/grafana:2.1
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: teslamate-grafana
+          mountPath: /var/lib/grafana
       volumes:
       - name: teslamate-import
         persistentVolumeClaim:
@@ -41,3 +48,6 @@ spec:
       - name: teslamate-data
         persistentVolumeClaim:
           claimName: teslamate-data
+      - name: teslamate-grafana
+        persistentVolumeClaim:
+          claimName: teslamate-grafana

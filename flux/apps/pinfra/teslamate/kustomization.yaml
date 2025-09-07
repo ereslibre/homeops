@@ -31,3 +31,31 @@ patches:
       kind: Ingress
       name: teslamate
       namespace: teslamate
+  - patch: |-
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: grafana
+        namespace: teslamate
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+      spec:
+        rules:
+        - host: grafana.teslamate.ereslibre.net
+          http:
+            paths:
+            - pathType: Prefix
+              path: /
+              backend:
+                service:
+                  name: grafana
+                  port:
+                    name: grafana
+        tls:
+        - hosts:
+          - grafana.teslamate.ereslibre.net
+          secretName: grafana-teslamate-ereslibre-net-cert
+    target:
+      kind: Ingress
+      name: grafana
+      namespace: teslamate
