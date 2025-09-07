@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openwebui
+  namespace: external-names
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: openwebui.ereslibre.net
+spec:
+  type: ExternalName
+  externalName: 10.0.4.32
