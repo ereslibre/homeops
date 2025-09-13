@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: home-assistant-app
-        image: ghcr.io/home-assistant/home-assistant:2025.8
+        image: ghcr.io/home-assistant/home-assistant:2025.9
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: null
