@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: home-assistant-app
-        image: ghcr.io/home-assistant/home-assistant:2024.11
+        image: ghcr.io/home-assistant/home-assistant:2025.8
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: null
@@ -68,7 +68,7 @@ spec:
             mountPath: /config/scripts.yaml
             subPath: scripts.yaml
       - name: home-assistant-whisper
-        image: rhasspy/wyoming-whisper:2.4.0
+        image: rhasspy/wyoming-whisper:2.5.0
         imagePullPolicy: IfNotPresent
         args: ['--model', 'medium', '--language', 'es']
         securityContext:
@@ -78,7 +78,7 @@ spec:
             containerPort: 10300
             protocol: TCP
       - name: home-assistant-piper
-        image: rhasspy/wyoming-piper:1.5.0
+        image: rhasspy/wyoming-piper:1.6.3
         imagePullPolicy: IfNotPresent
         args: ['--voice', 'es_ES-davefx-medium']
         securityContext:
