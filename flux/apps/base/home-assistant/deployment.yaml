@@ -87,6 +87,16 @@ spec:
           - name: http
             containerPort: 10200
             protocol: TCP
+      - name: home-assistant-openwakeword
+        image: rhasspy/wyoming-openwakeword:1.10.0
+        imagePullPolicy: IfNotPresent
+        args: ['--preload-model', 'ok_nabu']
+        securityContext:
+          privileged: null
+        ports:
+          - name: http
+            containerPort: 10400
+            protocol: TCP
       restartPolicy: Always
       volumes:
         - name: config-root
