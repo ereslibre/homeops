@@ -61,9 +61,6 @@ patches:
           homekit:
             advertise_ip: "10.0.4.31"
 
-          device_tracker:
-            - platform: bluetooth_le_tracker
-
           media_player:
             - platform: kef
               host: "10.0.1.37"
