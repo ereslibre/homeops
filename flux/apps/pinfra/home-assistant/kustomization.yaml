@@ -71,9 +71,9 @@ patches:
 
           shell_command:
             govee_on: |-
-              echo -n '{"msg": {"cmd": "turn", "data": {"value": true}}}' | nc -w0 -u 10.0.1.179 4003
+              echo -n '{"msg": {"cmd": "turn", "data": {"value": true}}}' | nc -w1 -u 10.0.1.179 4003
             govee_off: |-
-              echo -n '{"msg": {"cmd": "turn", "data": {"value": false}}}' | nc -w0 -u 10.0.1.179 4003
+              echo -n '{"msg": {"cmd": "turn", "data": {"value": false}}}' | nc -w1 -u 10.0.1.179 4003
 
           mqtt:
             sensor:
