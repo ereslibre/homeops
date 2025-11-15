@@ -75,6 +75,16 @@ patches:
             govee_off: |-
               echo -n '{"msg": {"cmd": "turn", "data": {"value": false}}}' | nc -w1 -u 10.0.1.179 4003
 
+          switch:
+            - platform: template
+              switches:
+                govee:
+                  friendly_name: "Govee Light"
+                  turn_on:
+                    service: shell_command.govee_on
+                  turn_off:
+                    service: shell_command.govee_off
+
           mqtt:
             sensor:
               - name: CO2
