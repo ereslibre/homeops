@@ -79,6 +79,7 @@ patches:
             - platform: template
               switches:
                 govee:
+                  unique_id: govee_light
                   friendly_name: "Govee Light"
                   turn_on:
                     service: shell_command.govee_on
