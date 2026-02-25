@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix
+  namespace: external-names
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: matrix.ereslibre.net
+spec:
+  type: ExternalName
+  externalName: 10.0.4.32

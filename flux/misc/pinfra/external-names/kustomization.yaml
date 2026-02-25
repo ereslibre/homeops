@@ -4,6 +4,7 @@ namespace: external-names
 resources:
   - namespace.yaml
   - hulk.yaml
+  - matrix.yaml
   - nuc-1.yaml
   - nuc-2.yaml
   - nuc-3.yaml
