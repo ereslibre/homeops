@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jupyter
+  namespace: external-names
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: jupyter.ereslibre.net
+spec:
+  type: ExternalName
+  externalName: 10.0.4.32
