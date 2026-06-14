@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: teslamate
-        image: teslamate/teslamate:2.1
+        image: teslamate/teslamate:4.0
         ports:
         - containerPort: 4000
         envFrom:
