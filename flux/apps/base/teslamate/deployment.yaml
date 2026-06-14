@@ -15,6 +15,35 @@ spec:
       labels:
         app.kubernetes.io/name: teslamate
     spec:
+      initContainers:
+      # Native sidecar (restartPolicy: Always): starts before the main
+      # containers and gates them via its startupProbe, so teslamate's
+      # entrypoint migration only runs once postgres is actually accepting
+      # connections. Requires Kubernetes >= 1.29 (native sidecars).
+      - name: postgres
+        image: postgres:17-trixie
+        restartPolicy: Always
+        envFrom:
+        - secretRef:
+            name: teslamate-db
+        volumeMounts:
+        - name: teslamate-data
+          mountPath: /var/lib/postgresql/data
+        startupProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - exec pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" -h 127.0.0.1
+          periodSeconds: 2
+          failureThreshold: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - exec pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" -h 127.0.0.1
+          periodSeconds: 10
       containers:
       - name: teslamate
         image: teslamate/teslamate:4.0
@@ -26,14 +55,6 @@ spec:
         volumeMounts:
         - name: teslamate-import
           mountPath: /opt/app/import
-      - name: postgres
-        image: postgres:17-trixie
-        envFrom:
-        - secretRef:
-            name: teslamate-db
-        volumeMounts:
-        - name: teslamate-data
-          mountPath: /var/lib/postgresql/data
       - name: grafana
         image: teslamate/grafana:2.1
         ports:
