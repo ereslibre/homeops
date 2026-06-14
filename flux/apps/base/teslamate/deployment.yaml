@@ -46,7 +46,7 @@ spec:
           periodSeconds: 10
       containers:
       - name: teslamate
-        image: teslamate/teslamate:4.0
+        image: ghcr.io/teslamate-org/teslamate:pr-5406
         ports:
         - containerPort: 4000
         envFrom:
@@ -56,7 +56,7 @@ spec:
         - name: teslamate-import
           mountPath: /opt/app/import
       - name: grafana
-        image: teslamate/grafana:2.1
+        image: teslamate/grafana:4.0
         ports:
         - containerPort: 3000
         volumeMounts:
