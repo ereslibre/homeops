@@ -11,4 +11,3 @@ resources:
   - nuc-3.yaml
   - synology.yaml
   - vscode.yaml
-  - openwebui.yaml
