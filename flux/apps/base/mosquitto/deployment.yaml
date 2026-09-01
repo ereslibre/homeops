@@ -21,6 +21,11 @@ spec:
           ports:
             - containerPort: 8883
             - containerPort: 9001
+          resources:
+            requests:
+              memory: "32Mi"
+            limits:
+              memory: "512Mi"
           volumeMounts:
             - mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf

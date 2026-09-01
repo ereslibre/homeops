@@ -33,7 +33,11 @@ spec:
           - name: coiot
             containerPort: 5683
             protocol: UDP
-        resources: {}
+        resources:
+          requests:
+            memory: "512Mi"
+          limits:
+            memory: "4096Mi"
         livenessProbe:
           tcpSocket:
             port: 8123

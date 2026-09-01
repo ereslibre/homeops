@@ -23,6 +23,11 @@ spec:
         env:
         - name: REGISTRY_STORAGE_DELETE_ENABLED
           value: "true"
+        resources:
+          requests:
+            memory: "64Mi"
+          limits:
+            memory: "1024Mi"
         volumeMounts:
         - name: data
           mountPath: /var/lib/registry
@@ -37,6 +42,11 @@ spec:
           value: "true"
         - name: SINGLE_REGISTRY
           value: "true"
+        resources:
+          requests:
+            memory: "32Mi"
+          limits:
+            memory: "384Mi"
       volumes:
       - name: data
         persistentVolumeClaim:

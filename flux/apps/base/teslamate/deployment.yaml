@@ -26,6 +26,11 @@ spec:
         envFrom:
         - secretRef:
             name: teslamate-db
+        resources:
+          requests:
+            memory: "256Mi"
+          limits:
+            memory: "2048Mi"
         volumeMounts:
         - name: teslamate-data
           mountPath: /var/lib/postgresql/data
@@ -52,6 +57,11 @@ spec:
         envFrom:
         - secretRef:
             name: teslamate
+        resources:
+          requests:
+            memory: "256Mi"
+          limits:
+            memory: "2048Mi"
         volumeMounts:
         - name: teslamate-import
           mountPath: /opt/app/import
@@ -59,6 +69,11 @@ spec:
         image: teslamate/grafana:4.0
         ports:
         - containerPort: 3000
+        resources:
+          requests:
+            memory: "256Mi"
+          limits:
+            memory: "1024Mi"
         volumeMounts:
         - name: teslamate-grafana
           mountPath: /var/lib/grafana
