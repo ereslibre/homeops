@@ -6,9 +6,10 @@ resources:
   - backup-schedule.yaml
   - restic-sealed-secret.yaml
 patches:
-  # Install the kef_connector custom component (KEF LSX II) into the config
-  # volume. Pinned by version and checksum; a failed download never blocks
-  # Home Assistant from starting, it just leaves whatever is already there.
+  # Install the kef_connector (KEF LSX II) and huawei_solar custom components
+  # into the config volume. Pinned by version and checksum; a failed download
+  # never blocks Home Assistant from starting, it just leaves whatever is
+  # already there.
   - patch: |-
       apiVersion: apps/v1
       kind: Deployment
@@ -20,7 +21,7 @@ patches:
           spec:
             initContainers:
               - name: install-kef-connector
-                image: ghcr.io/home-assistant/home-assistant:2025.9
+                image: ghcr.io/home-assistant/home-assistant:2026.10
                 imagePullPolicy: IfNotPresent
                 env:
                   - name: KEF_CONNECTOR_VERSION
@@ -46,6 +47,39 @@ patches:
                       echo "kef_connector ${KEF_CONNECTOR_VERSION} installed"
                     else
                       echo "WARNING: could not install kef_connector ${KEF_CONNECTOR_VERSION}, leaving ${dest} untouched"
+                    fi
+                    exit 0
+                volumeMounts:
+                  - name: config-root
+                    mountPath: /config
+              - name: install-huawei-solar
+                image: ghcr.io/home-assistant/home-assistant:2026.10
+                imagePullPolicy: IfNotPresent
+                env:
+                  - name: HUAWEI_SOLAR_VERSION
+                    value: "2.1.5"
+                  - name: HUAWEI_SOLAR_SHA256
+                    value: "aa53ffa4ee1a9774038670cfda3519f2c4905ca12b0aa96cc6b016b40cf7a72b"
+                command:
+                  - sh
+                  - -c
+                  - |
+                    dest=/config/custom_components/huawei_solar
+                    if grep -q "\"version\": *\"${HUAWEI_SOLAR_VERSION}\"" "${dest}/manifest.json" 2>/dev/null; then
+                      echo "huawei_solar ${HUAWEI_SOLAR_VERSION} already installed"
+                      exit 0
+                    fi
+                    tmp=$(mktemp -d)
+                    # The integration lives at the root of the repository.
+                    if curl -fsSL --max-time 60 -o "${tmp}/src.tar.gz" "https://github.com/wlcrs/huawei_solar/archive/refs/tags/${HUAWEI_SOLAR_VERSION}.tar.gz" \
+                      && echo "${HUAWEI_SOLAR_SHA256}  ${tmp}/src.tar.gz" | sha256sum -c - \
+                      && tar -xzf "${tmp}/src.tar.gz" -C "${tmp}"; then
+                      mkdir -p /config/custom_components
+                      rm -rf "${dest}"
+                      cp -r "${tmp}/huawei_solar-${HUAWEI_SOLAR_VERSION}" "${dest}"
+                      echo "huawei_solar ${HUAWEI_SOLAR_VERSION} installed"
+                    else
+                      echo "WARNING: could not install huawei_solar ${HUAWEI_SOLAR_VERSION}, leaving ${dest} untouched"
                     fi
                     exit 0
                 volumeMounts:
@@ -187,28 +221,26 @@ patches:
                             b: 0
                           colorTemInKelvin: "{{ (1000000 / color_temp) | round | int }}"
 
-          # Kept so existing automations, dashboards and HomeKit keep working;
-          # it just mirrors light.govee_lamp.
-          switch:
-            - platform: template
-              switches:
-                govee:
+            # Kept so existing automations, dashboards and HomeKit keep working;
+            # it just mirrors light.govee_lamp.
+            - switch:
+                - name: "Govee Light"
                   unique_id: govee_light
-                  friendly_name: "Govee Light"
-                  value_template: "{{ is_state('light.govee_lamp', 'on') }}"
+                  default_entity_id: switch.govee
+                  state: "{{ is_state('light.govee_lamp', 'on') }}"
                   turn_on:
-                    service: light.turn_on
-                    target:
-                      entity_id: light.govee_lamp
+                    - action: light.turn_on
+                      target:
+                        entity_id: light.govee_lamp
                   turn_off:
-                    service: light.turn_off
-                    target:
-                      entity_id: light.govee_lamp
+                    - action: light.turn_off
+                      target:
+                        entity_id: light.govee_lamp
 
           mqtt:
             sensor:
               - name: CO2
-                object_id: office_air_monitor_co2
+                default_entity_id: sensor.office_air_monitor_co2
                 device_class: carbon_dioxide
                 unit_of_measurement: "ppm"
                 state_topic: "homeassistant/qingping/582D34701BA9/up"
@@ -228,7 +260,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: 9a0db1bc69a41507a757c5d222d4a845dc244d82
               - name: PM2.5
-                object_id: office_air_monitor_pm25
+                default_entity_id: sensor.office_air_monitor_pm25
                 device_class: pm25
                 state_topic: "homeassistant/qingping/582D34701BA9/up"
                 value_template: >-
@@ -248,7 +280,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: b7e9459ef047905d96918d8e247b0c3dd61b7cc8
               - name: PM10
-                object_id: office_air_monitor_pm10
+                default_entity_id: sensor.office_air_monitor_pm10
                 device_class: pm10
                 unit_of_measurement: "µg/m³"
                 state_topic: "homeassistant/qingping/582D34701BA9/up"
@@ -268,7 +300,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: 4beba1f55c9fc38b528353a3eeae9df9db9eae0f
               - name: TVOC
-                object_id: office_air_monitor_tvoc
+                default_entity_id: sensor.office_air_monitor_tvoc
                 device_class: volatile_organic_compounds
                 unit_of_measurement: "mg/m³"
                 state_topic: "homeassistant/qingping/582D34701BA9/up"
@@ -288,7 +320,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: 049dba2512f7e141b094799e308d587b1e199174
               - name: Humedad
-                object_id: office_air_monitor_humidity
+                default_entity_id: sensor.office_air_monitor_humidity
                 device_class: humidity
                 state_topic: "homeassistant/qingping/582D34701BA9/up"
                 value_template: >-
@@ -307,7 +339,7 @@ patches:
                   model: "CGS1"
                   manufacturer: "qingping"
                 unique_id: fca28b722b2d263cdda7906b1f1fda67366c9f42
-              - object_id: office_air_monitor_temperature
+              - default_entity_id: sensor.office_air_monitor_temperature
                 name: Temperatura
                 device_class: temperature
                 unit_of_measurement: "°C"
@@ -328,7 +360,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: c70b69d6dc1ff5ef3c1e86ecca3e547ae11c3c66
               - name: CO2
-                object_id: living_room_air_monitor_co2
+                default_entity_id: sensor.living_room_air_monitor_co2
                 device_class: carbon_dioxide
                 unit_of_measurement: "ppm"
                 state_topic: "homeassistant/qingping/582D3401491F/up"
@@ -348,7 +380,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: 848adb96-7b50-4b7c-a940-6223df7e1168
               - name: PM2.5
-                object_id: living_room_air_monitor_pm25
+                default_entity_id: sensor.living_room_air_monitor_pm25
                 device_class: pm25
                 state_topic: "homeassistant/qingping/582D3401491F/up"
                 value_template: >-
@@ -368,7 +400,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: 4e7d8563-798f-4313-869d-2b597377fe8f
               - name: PM10
-                object_id: living_room_air_monitor_pm10
+                default_entity_id: sensor.living_room_air_monitor_pm10
                 device_class: pm10
                 unit_of_measurement: "µg/m³"
                 state_topic: "homeassistant/qingping/582D3401491F/up"
@@ -388,7 +420,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: 837ab652-77f8-43a0-9aaa-db3abfad206f
               - name: TVOC
-                object_id: living_room_air_monitor_tvoc
+                default_entity_id: sensor.living_room_air_monitor_tvoc
                 device_class: volatile_organic_compounds
                 unit_of_measurement: "mg/m³"
                 state_topic: "homeassistant/qingping/582D3401491F/up"
@@ -408,7 +440,7 @@ patches:
                   manufacturer: "qingping"
                 unique_id: cf70fbfa-31c4-4585-8786-6109342eb24d
               - name: Humedad
-                object_id: living_room_air_monitor_humidity
+                default_entity_id: sensor.living_room_air_monitor_humidity
                 device_class: humidity
                 state_topic: "homeassistant/qingping/582D3401491F/up"
                 value_template: >-
@@ -427,7 +459,7 @@ patches:
                   model: "CGS1"
                   manufacturer: "qingping"
                 unique_id: b887856a-22da-424e-8d7b-00b71250630a
-              - object_id: living_room_air_monitor_temperature
+              - default_entity_id: sensor.living_room_air_monitor_temperature
                 name: Temperatura
                 device_class: temperature
                 unit_of_measurement: "°C"
