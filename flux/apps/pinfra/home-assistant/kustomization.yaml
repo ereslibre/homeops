@@ -61,30 +61,100 @@ patches:
           homekit:
             advertise_ip: "10.0.4.31"
 
+          # LSX II: needs the kef_connector custom component in
+          # /config/custom_components (the built-in kef platform only speaks
+          # the first generation protocol).
           media_player:
-            - platform: kef
-              host: "10.0.1.37"
-              type: LSX
+            - platform: kef_connector
+              host: "10.0.1.36"
+              speaker_model: LSX2
               name: Salón
               maximum_volume: 1
               volume_step: 0.05
 
+          # Govee H6076 floor lamp, driven through its LAN API (UDP 4003).
+          # The lamp replies to port 4002 of the sender, which never makes it
+          # back into the pod, so everything here is one-way and optimistic.
+          # The lamp needs a fixed IP (DHCP reservation).
           shell_command:
-            govee_on: |-
-              echo -n '{"msg": {"cmd": "turn", "data": {"value": true}}}' | nc -w1 -u 10.0.1.179 4003
-            govee_off: |-
-              echo -n '{"msg": {"cmd": "turn", "data": {"value": false}}}' | nc -w1 -u 10.0.1.179 4003
+            govee_send: >-
+              python3 -c "import socket, sys;
+              socket.socket(socket.AF_INET, socket.SOCK_DGRAM).sendto(sys.argv[1].encode(), ('10.0.1.37', 4003))"
+              '{{ dict(msg=dict(cmd=cmd, data=data)) | to_json }}'
 
+          template:
+            - light:
+                - name: "Govee Lamp"
+                  unique_id: govee_lamp
+                  icon: mdi:floor-lamp
+                  min_mireds: 154
+                  max_mireds: 455
+                  turn_on:
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: turn
+                        data:
+                          value: 1
+                  turn_off:
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: turn
+                        data:
+                          value: 0
+                  set_level:
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: brightness
+                        data:
+                          value: "{{ [1, (brightness / 255 * 100) | round | int] | max }}"
+                  set_rgb:
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: turn
+                        data:
+                          value: 1
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: colorwc
+                        data:
+                          color:
+                            r: "{{ r }}"
+                            g: "{{ g }}"
+                            b: "{{ b }}"
+                          colorTemInKelvin: 0
+                  set_temperature:
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: turn
+                        data:
+                          value: 1
+                    - action: shell_command.govee_send
+                      data:
+                        cmd: colorwc
+                        data:
+                          color:
+                            r: 0
+                            g: 0
+                            b: 0
+                          colorTemInKelvin: "{{ (1000000 / color_temp) | round | int }}"
+
+          # Kept so existing automations, dashboards and HomeKit keep working;
+          # it just mirrors light.govee_lamp.
           switch:
             - platform: template
               switches:
                 govee:
                   unique_id: govee_light
                   friendly_name: "Govee Light"
+                  value_template: "{{ is_state('light.govee_lamp', 'on') }}"
                   turn_on:
-                    service: shell_command.govee_on
+                    service: light.turn_on
+                    target:
+                      entity_id: light.govee_lamp
                   turn_off:
-                    service: shell_command.govee_off
+                    service: light.turn_off
+                    target:
+                      entity_id: light.govee_lamp
 
           mqtt:
             sensor:
