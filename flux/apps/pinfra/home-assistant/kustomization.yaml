@@ -132,13 +132,12 @@ patches:
           # Enable API
           api:
 
-          # pinfra specific settings
-          http:
-            use_x_forwarded_for: true
-            trusted_proxies:
-              - 10.0.0.0/8
-            ip_ban_enabled: false
-            login_attempts_threshold: 5
+          # The http settings (use_x_forwarded_for, trusted_proxies 10.0.0.0/8,
+          # ip_ban_enabled false, login_attempts_threshold 5) are no longer
+          # accepted here since 2026.10: they were imported into the config
+          # volume and are now managed in Settings > System > Network. On a
+          # fresh volume they have to be set again there, or the ingress is
+          # not trusted as a proxy.
 
           # mDNS reflector: tell homekit the advertise IP address
           homekit:
