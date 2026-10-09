@@ -6,6 +6,55 @@ resources:
   - backup-schedule.yaml
   - restic-sealed-secret.yaml
 patches:
+  # Install the kef_connector custom component (KEF LSX II) into the config
+  # volume. Pinned by version and checksum; a failed download never blocks
+  # Home Assistant from starting, it just leaves whatever is already there.
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: home-assistant
+        namespace: home-assistant
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: install-kef-connector
+                image: ghcr.io/home-assistant/home-assistant:2025.9
+                imagePullPolicy: IfNotPresent
+                env:
+                  - name: KEF_CONNECTOR_VERSION
+                    value: "0.6.5"
+                  - name: KEF_CONNECTOR_SHA256
+                    value: "d94fd37d348d74453e26e120950f42470d7065edf52a5677fbd80528a15fe232"
+                command:
+                  - sh
+                  - -c
+                  - |
+                    dest=/config/custom_components/kef_connector
+                    if grep -q "\"version\": *\"${KEF_CONNECTOR_VERSION}\"" "${dest}/manifest.json" 2>/dev/null; then
+                      echo "kef_connector ${KEF_CONNECTOR_VERSION} already installed"
+                      exit 0
+                    fi
+                    tmp=$(mktemp -d)
+                    if curl -fsSL --max-time 60 -o "${tmp}/src.tar.gz" "https://github.com/N0ciple/hass-kef-connector/archive/refs/tags/${KEF_CONNECTOR_VERSION}.tar.gz" \
+                      && echo "${KEF_CONNECTOR_SHA256}  ${tmp}/src.tar.gz" | sha256sum -c - \
+                      && tar -xzf "${tmp}/src.tar.gz" -C "${tmp}"; then
+                      mkdir -p /config/custom_components
+                      rm -rf "${dest}"
+                      cp -r "${tmp}/hass-kef-connector-${KEF_CONNECTOR_VERSION}/custom_components/kef_connector" "${dest}"
+                      echo "kef_connector ${KEF_CONNECTOR_VERSION} installed"
+                    else
+                      echo "WARNING: could not install kef_connector ${KEF_CONNECTOR_VERSION}, leaving ${dest} untouched"
+                    fi
+                    exit 0
+                volumeMounts:
+                  - name: config-root
+                    mountPath: /config
+    target:
+      kind: Deployment
+      name: home-assistant
+      namespace: home-assistant
   - patch: |-
       apiVersion: networking.k8s.io/v1
       kind: Ingress

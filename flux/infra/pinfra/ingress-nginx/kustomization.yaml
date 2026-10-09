@@ -16,6 +16,7 @@ patches:
         values:
           tcp:
             "8883": "mosquitto/mosquitto-mqtt:8883"
+            "21063": "home-assistant/home-assistant:21063"
           udp:
             "5683": "home-assistant/shelly-coiot:5683"
     target:

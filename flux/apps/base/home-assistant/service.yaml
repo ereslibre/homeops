@@ -16,3 +16,7 @@ spec:
     targetPort: coiot
     protocol: UDP
     name: coiot
+  - port: 21063
+    targetPort: homekit
+    protocol: TCP
+    name: homekit
