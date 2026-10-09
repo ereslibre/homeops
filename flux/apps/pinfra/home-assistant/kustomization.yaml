@@ -236,6 +236,18 @@ patches:
                       target:
                         entity_id: light.govee_lamp
 
+          # Office ambient lights as one entity: the Hue zone only covers the
+          # two Hue lamps, this also includes the Nanoleaf and the Govee lamp.
+          light:
+            - platform: group
+              name: "Ambiente despacho"
+              unique_id: office_ambient_lights
+              entities:
+                - light.shapes_219e
+                - light.govee_lamp
+                - light.bookshelf
+                - light.desk
+
           mqtt:
             sensor:
               - name: CO2
