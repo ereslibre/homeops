@@ -5,6 +5,7 @@ resources:
   - backup-sealed-secret.yaml
   - backup-schedule.yaml
   - restic-sealed-secret.yaml
+  - secrets-sealed-secret.yaml
 patches:
   # Install the kef_connector (KEF LSX II) and huawei_solar custom components
   # into the config volume. Pinned by version and checksum; a failed download
@@ -85,6 +86,18 @@ patches:
                 volumeMounts:
                   - name: config-root
                     mountPath: /config
+            # secrets.yaml for `!secret` references, from a SealedSecret.
+            containers:
+              - name: home-assistant-app
+                volumeMounts:
+                  - name: secrets
+                    mountPath: /config/secrets.yaml
+                    subPath: secrets.yaml
+                    readOnly: true
+            volumes:
+              - name: secrets
+                secret:
+                  secretName: home-assistant-secrets
     target:
       kind: Deployment
       name: home-assistant
@@ -235,6 +248,72 @@ patches:
                     - action: light.turn_off
                       target:
                         entity_id: light.govee_lamp
+
+          # Visit mode needs a PIN to be turned off from the dashboard. The
+          # panel mirrors input_boolean.hay_visita: armed while there is a
+          # visit, and disarming it (which asks for the code) ends the visit.
+          alarm_control_panel:
+            - platform: manual
+              name: "Modo visita"
+              unique_id: visit_mode_panel
+              code: !secret visita_pin
+              code_arm_required: false
+              arming_time: 0
+              delay_time: 0
+
+          automation visita:
+            - id: visit_mode_panel_follows_boolean
+              alias: "Modo visita: el panel sigue al interruptor"
+              mode: queued
+              triggers:
+                - trigger: state
+                  entity_id: input_boolean.hay_visita
+                  to: ["on", "off"]
+                - trigger: homeassistant
+                  event: start
+              actions:
+                - choose:
+                    - conditions:
+                        - condition: state
+                          entity_id: input_boolean.hay_visita
+                          state: "on"
+                        - condition: state
+                          entity_id: alarm_control_panel.modo_visita
+                          state: disarmed
+                      sequence:
+                        - action: alarm_control_panel.alarm_arm_away
+                          target:
+                            entity_id: alarm_control_panel.modo_visita
+                    - conditions:
+                        - condition: state
+                          entity_id: input_boolean.hay_visita
+                          state: "off"
+                        - condition: not
+                          conditions:
+                            - condition: state
+                              entity_id: alarm_control_panel.modo_visita
+                              state: disarmed
+                      sequence:
+                        - action: alarm_control_panel.alarm_disarm
+                          target:
+                            entity_id: alarm_control_panel.modo_visita
+                          data:
+                            code: !secret visita_pin
+            - id: visit_mode_boolean_follows_panel
+              alias: "Modo visita: el PIN apaga el interruptor"
+              mode: queued
+              triggers:
+                - trigger: state
+                  entity_id: alarm_control_panel.modo_visita
+                  to: disarmed
+              conditions:
+                - condition: state
+                  entity_id: input_boolean.hay_visita
+                  state: "on"
+              actions:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: input_boolean.hay_visita
 
           # Office ambient lights as one entity: the Hue zone only covers the
           # two Hue lamps, this also includes the Nanoleaf and the Govee lamp.
