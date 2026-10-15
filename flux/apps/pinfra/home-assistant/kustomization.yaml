@@ -7,10 +7,10 @@ resources:
   - restic-sealed-secret.yaml
   - secrets-sealed-secret.yaml
 patches:
-  # Install the kef_connector (KEF LSX II) and huawei_solar custom components
-  # into the config volume. Pinned by version and checksum; a failed download
-  # never blocks Home Assistant from starting, it just leaves whatever is
-  # already there.
+  # Install the kef_connector (KEF LSX II) and huawei_solar custom components,
+  # and the kiosk-mode frontend plugin, into the config volume. Pinned by
+  # version and checksum; a failed download never blocks Home Assistant from
+  # starting, it just leaves whatever is already there.
   - patch: |-
       apiVersion: apps/v1
       kind: Deployment
@@ -81,6 +81,37 @@ patches:
                       echo "huawei_solar ${HUAWEI_SOLAR_VERSION} installed"
                     else
                       echo "WARNING: could not install huawei_solar ${HUAWEI_SOLAR_VERSION}, leaving ${dest} untouched"
+                    fi
+                    exit 0
+                volumeMounts:
+                  - name: config-root
+                    mountPath: /config
+              - name: install-kiosk-mode
+                image: ghcr.io/home-assistant/home-assistant:2026.10
+                imagePullPolicy: IfNotPresent
+                env:
+                  - name: KIOSK_MODE_VERSION
+                    value: "15.0.0"
+                  - name: KIOSK_MODE_SHA256
+                    value: "b54c24054c27980faeace330bbf019f3b03e54acfda190573a26026cddbf6cf1"
+                command:
+                  - sh
+                  - -c
+                  - |
+                    dest=/config/www/kiosk-mode
+                    if [ "$(cat "${dest}/VERSION" 2>/dev/null)" = "${KIOSK_MODE_VERSION}" ]; then
+                      echo "kiosk-mode ${KIOSK_MODE_VERSION} already installed"
+                      exit 0
+                    fi
+                    tmp=$(mktemp -d)
+                    if curl -fsSL --max-time 60 -o "${tmp}/kiosk-mode.js" "https://github.com/NemesisRE/kiosk-mode/releases/download/v${KIOSK_MODE_VERSION}/kiosk-mode.js" \
+                      && echo "${KIOSK_MODE_SHA256}  ${tmp}/kiosk-mode.js" | sha256sum -c -; then
+                      mkdir -p "${dest}"
+                      cp "${tmp}/kiosk-mode.js" "${dest}/kiosk-mode.js"
+                      echo "${KIOSK_MODE_VERSION}" > "${dest}/VERSION"
+                      echo "kiosk-mode ${KIOSK_MODE_VERSION} installed"
+                    else
+                      echo "WARNING: could not install kiosk-mode ${KIOSK_MODE_VERSION}, leaving ${dest} untouched"
                     fi
                     exit 0
                 volumeMounts:
@@ -249,9 +280,10 @@ patches:
                       target:
                         entity_id: light.govee_lamp
 
-          # Visit mode needs a PIN to be turned off from the dashboard. The
-          # panel mirrors input_boolean.hay_visita: armed while there is a
-          # visit, and disarming it (which asks for the code) ends the visit.
+          # Visit mode needs a PIN to end. The panel is the source of truth:
+          # arming it (or turning on input_boolean.hay_visita) starts a visit,
+          # and only disarming it, which asks for the code, ends it. The boolean
+          # just mirrors the panel for dashboards and automations.
           alarm_control_panel:
             - platform: manual
               name: "Modo visita"
@@ -263,57 +295,138 @@ patches:
 
           automation visita:
             - id: visit_mode_panel_follows_boolean
-              alias: "Modo visita: el panel sigue al interruptor"
+              alias: "Modo visita: activar la visita arma el panel"
               mode: queued
               triggers:
                 - trigger: state
                   entity_id: input_boolean.hay_visita
-                  to: ["on", "off"]
+                  from: "off"
+                  to: "on"
+              conditions:
+                - condition: state
+                  entity_id: alarm_control_panel.modo_visita
+                  state: disarmed
+              actions:
+                - action: alarm_control_panel.alarm_arm_away
+                  target:
+                    entity_id: alarm_control_panel.modo_visita
+
+            - id: visit_mode_boolean_follows_panel
+              alias: "Modo visita: el interruptor sigue al panel"
+              mode: queued
+              triggers:
+                - trigger: state
+                  entity_id: alarm_control_panel.modo_visita
                 - trigger: homeassistant
                   event: start
               actions:
                 - choose:
                     - conditions:
                         - condition: state
-                          entity_id: input_boolean.hay_visita
-                          state: "on"
-                        - condition: state
                           entity_id: alarm_control_panel.modo_visita
                           state: disarmed
-                      sequence:
-                        - action: alarm_control_panel.alarm_arm_away
-                          target:
-                            entity_id: alarm_control_panel.modo_visita
-                    - conditions:
                         - condition: state
                           entity_id: input_boolean.hay_visita
-                          state: "off"
+                          state: "on"
+                      sequence:
+                        - action: input_boolean.turn_off
+                          target:
+                            entity_id: input_boolean.hay_visita
+                    - conditions:
                         - condition: not
                           conditions:
                             - condition: state
                               entity_id: alarm_control_panel.modo_visita
                               state: disarmed
+                        - condition: state
+                          entity_id: input_boolean.hay_visita
+                          state: "off"
                       sequence:
-                        - action: alarm_control_panel.alarm_disarm
+                        - action: input_boolean.turn_on
                           target:
-                            entity_id: alarm_control_panel.modo_visita
-                          data:
-                            code: !secret visita_pin
-            - id: visit_mode_boolean_follows_panel
-              alias: "Modo visita: el PIN apaga el interruptor"
+                            entity_id: input_boolean.hay_visita
+
+            # Turning the boolean off while the panel is still armed did not go
+            # through the PIN: put it back.
+            - id: visit_mode_boolean_guard
+              alias: "Modo visita: sin PIN no se termina"
               mode: queued
               triggers:
                 - trigger: state
-                  entity_id: alarm_control_panel.modo_visita
-                  to: disarmed
+                  entity_id: input_boolean.hay_visita
+                  from: "on"
+                  to: "off"
+              conditions:
+                - condition: not
+                  conditions:
+                    - condition: state
+                      entity_id: alarm_control_panel.modo_visita
+                      state: disarmed
+              actions:
+                - action: input_boolean.turn_on
+                  target:
+                    entity_id: input_boolean.hay_visita
+
+            # Snapshot the protected entities when a visit starts, so anything the
+            # kitchen display changes outside the allow-list can be put back.
+            - id: visit_mode_snapshot
+              alias: "Modo visita: foto del estado al empezar"
+              triggers:
+                - trigger: state
+                  entity_id: input_boolean.hay_visita
+                  to: "on"
+              actions:
+                - action: scene.create
+                  data:
+                    scene_id: antes_de_la_visita
+                    snapshot_entities:
+                      - input_boolean.vacaciones
+                      - input_boolean.no_encender_el_aire_acondicionado
+                      - input_boolean.ac_turned_on_automatically
+                      - siren.entrada_sirena
+                      - siren.terraza_sirena
+
+            # Server-side backstop. HA cannot refuse a service call from a non-admin
+            # user, but every call fires `call_service` with the caller's user id, so
+            # calls from the kitchen account during a visit that fall outside the
+            # allow-list are undone and reported.
+            - id: visit_mode_enforce_allow_list
+              alias: "Modo visita: deshacer acciones no permitidas desde la cocina"
+              mode: queued
+              variables:
+                display_user: bccfedc6e53a414da0b87ee6277f0e6a  # "Family", the kitchen display
+                allowed_domains: [media_player, light, cover, climate, camera]
+                allowed_entities:
+                  - switch.salon_luz_mueble_salon
+                  - switch.espejo
+                  - switch.shelly_main_mirror
+                  - alarm_control_panel.modo_visita   # the PIN check itself is server-side
+              triggers:
+                - trigger: event
+                  event_type: call_service
               conditions:
                 - condition: state
                   entity_id: input_boolean.hay_visita
                   state: "on"
+                - condition: template
+                  value_template: >-
+                    {% set d = trigger.event.data %}
+                    {% set ids = d.service_data.entity_id | default([]) %}
+                    {% set ids = [ids] if ids is string else ids | list %}
+                    {{ trigger.event.context.user_id == display_user
+                       and d.domain not in allowed_domains
+                       and (ids | count == 0 or ids | reject('in', allowed_entities) | list | count > 0) }}
               actions:
-                - action: input_boolean.turn_off
+                - delay: 2
+                - action: scene.turn_on
                   target:
-                    entity_id: input_boolean.hay_visita
+                    entity_id: scene.antes_de_la_visita
+                - action: persistent_notification.create
+                  data:
+                    title: "Modo visita"
+                    message: >-
+                      La cocina intentó {{ trigger.event.data.domain }}.{{ trigger.event.data.service }}
+                      {{ trigger.event.data.service_data.entity_id | default('') }}; se ha deshecho.
 
           # Office ambient lights as one entity: the Hue zone only covers the
           # two Hue lamps, this also includes the Nanoleaf and the Govee lamp.
@@ -570,9 +683,13 @@ patches:
                   manufacturer: "qingping"
                 unique_id: dd90764f-d244-4285-9987-36a94b456776
 
-          # Load frontend themes from the themes folder
+          # Load frontend themes from the themes folder, and kiosk-mode (installed
+          # into /config/www by an init container) to lock the kitchen display
+          # down during a visit; its settings live in the kitchen dashboard.
           frontend:
             themes: !include_dir_merge_named themes
+            extra_module_url:
+              - /local/kiosk-mode/kiosk-mode.js?v15.0.0
 
           automation: !include automations.yaml
           script: !include scripts.yaml
