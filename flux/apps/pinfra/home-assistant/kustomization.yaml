@@ -6,6 +6,13 @@ resources:
   - backup-schedule.yaml
   - restic-sealed-secret.yaml
   - secrets-sealed-secret.yaml
+# Frontend module that locks the kitchen display during a visit; served from
+# /config/www and loaded through extra_module_url.
+configMapGenerator:
+  - name: visit-lock
+    namespace: home-assistant
+    files:
+      - visit-lock.js
 patches:
   # Install the kef_connector (KEF LSX II) and huawei_solar custom components,
   # and the kiosk-mode frontend plugin, into the config volume. Pinned by
@@ -125,10 +132,17 @@ patches:
                     mountPath: /config/secrets.yaml
                     subPath: secrets.yaml
                     readOnly: true
+                  - name: visit-lock
+                    mountPath: /config/www/visit-lock/visit-lock.js
+                    subPath: visit-lock.js
+                    readOnly: true
             volumes:
               - name: secrets
                 secret:
                   secretName: home-assistant-secrets
+              - name: visit-lock
+                configMap:
+                  name: visit-lock
     target:
       kind: Deployment
       name: home-assistant
@@ -401,6 +415,7 @@ patches:
                   - switch.espejo
                   - switch.shelly_main_mirror
                   - alarm_control_panel.modo_visita   # the PIN check itself is server-side
+                  - input_boolean.hay_visita          # turning it off is undone by the guard
               triggers:
                 - trigger: event
                   event_type: call_service
@@ -683,13 +698,15 @@ patches:
                   manufacturer: "qingping"
                 unique_id: dd90764f-d244-4285-9987-36a94b456776
 
-          # Load frontend themes from the themes folder, and kiosk-mode (installed
-          # into /config/www by an init container) to lock the kitchen display
-          # down during a visit; its settings live in the kitchen dashboard.
+          # Load frontend themes from the themes folder, and lock the kitchen
+          # display down during a visit: kiosk-mode (installed into /config/www
+          # by an init container, its settings live in the kitchen dashboard)
+          # trims the kitchen dashboard, and visit-lock covers every other page.
           frontend:
             themes: !include_dir_merge_named themes
             extra_module_url:
               - /local/kiosk-mode/kiosk-mode.js?v15.0.0
+              - /local/visit-lock/visit-lock.js
 
           automation: !include automations.yaml
           script: !include scripts.yaml
