@@ -1,7 +1,8 @@
 // While there is a visit (input_boolean.hay_visita on), the kitchen display
-// only shows the kitchen and energy dashboards: any other page is covered by a
-// full-viewport message. kiosk-mode only acts on the dashboard that holds its
-// config, so it cannot cover the built-in panels (calendar, map, ...) itself.
+// only shows the kitchen and energy dashboards: the other sidebar entries are
+// hidden, and any other page reached anyway is covered by a full-viewport
+// message. kiosk-mode only acts on the dashboard that holds its config, so it
+// cannot cover the built-in panels (calendar, map, ...) itself.
 
 const DISPLAY_USER = "bccfedc6e53a414da0b87ee6277f0e6a"; // "Family", the kitchen display
 const VISIT_ENTITY = "input_boolean.hay_visita";
@@ -9,6 +10,17 @@ const ALLOWED = [
   { path: "/dashboard-kitchen", label: "Cocina" },
   { path: "/energy", label: "Energía" },
 ];
+
+// Sidebar entries are <ha-list-item-button id="sidebar-panel-<url_path>">; the
+// account and notifications entries go too, as kiosk-mode hides them on the
+// kitchen dashboard.
+const SIDEBAR_CSS = `
+  ha-list-item-button[id^="sidebar-panel-"]${ALLOWED.map((a) => `:not(#sidebar-panel-${a.path.slice(1)})`).join("")},
+  #sidebar-profile,
+  #sidebar-notifications {
+    display: none !important;
+  }
+`;
 
 let overlay;
 
@@ -71,16 +83,32 @@ function buildOverlay() {
   return el;
 }
 
+function lockSidebar(visit) {
+  const sidebar = document
+    .querySelector("home-assistant")
+    ?.shadowRoot?.querySelector("home-assistant-main")
+    ?.shadowRoot?.querySelector("ha-sidebar")?.shadowRoot;
+  if (!sidebar) return;
+
+  let style = sidebar.getElementById("visit-lock-sidebar");
+  if (!style) {
+    style = document.createElement("style");
+    style.id = "visit-lock-sidebar";
+    sidebar.append(style);
+  }
+  const css = visit ? SIDEBAR_CSS : "";
+  if (style.textContent !== css) style.textContent = css;
+}
+
 function update() {
   const hass = document.querySelector("home-assistant")?.hass;
   if (!hass?.user || !hass.states) return;
 
   const path = location.pathname;
-  const locked =
-    hass.user.id === DISPLAY_USER &&
-    hass.states[VISIT_ENTITY]?.state === "on" &&
-    !ALLOWED.some((a) => path === a.path || path.startsWith(`${a.path}/`));
+  const visit = hass.user.id === DISPLAY_USER && hass.states[VISIT_ENTITY]?.state === "on";
+  const locked = visit && !ALLOWED.some((a) => path === a.path || path.startsWith(`${a.path}/`));
 
+  lockSidebar(visit);
   overlay ??= buildOverlay();
   overlay.style.display = locked ? "flex" : "none";
 }

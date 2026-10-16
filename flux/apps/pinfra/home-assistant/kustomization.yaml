@@ -706,7 +706,7 @@ patches:
             themes: !include_dir_merge_named themes
             extra_module_url:
               - /local/kiosk-mode/kiosk-mode.js?v15.0.0
-              - /local/visit-lock/visit-lock.js
+              - /local/visit-lock/visit-lock.js?v2
 
           automation: !include automations.yaml
           script: !include scripts.yaml
