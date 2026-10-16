@@ -13,6 +13,13 @@ configMapGenerator:
     namespace: home-assistant
     files:
       - visit-lock.js
+  # Lets the apple_tv integration connect to the Apple TV although mDNS
+  # discovery never reaches the pod; see apple_tv_direct/__init__.py.
+  - name: apple-tv-direct
+    namespace: home-assistant
+    files:
+      - apple_tv_direct/__init__.py
+      - apple_tv_direct/manifest.json
 patches:
   # Install the kef_connector (KEF LSX II) and huawei_solar custom components,
   # and the kiosk-mode frontend plugin, into the config volume. Pinned by
@@ -136,6 +143,9 @@ patches:
                     mountPath: /config/www/visit-lock/visit-lock.js
                     subPath: visit-lock.js
                     readOnly: true
+                  - name: apple-tv-direct
+                    mountPath: /config/custom_components/apple_tv_direct
+                    readOnly: true
             volumes:
               - name: secrets
                 secret:
@@ -143,6 +153,9 @@ patches:
               - name: visit-lock
                 configMap:
                   name: visit-lock
+              - name: apple-tv-direct
+                configMap:
+                  name: apple-tv-direct
     target:
       kind: Deployment
       name: home-assistant
@@ -196,6 +209,10 @@ patches:
           # volume and are now managed in Settings > System > Network. On a
           # fresh volume they have to be set again there, or the ingress is
           # not trusted as a proxy.
+
+          # The Apple TV (static DHCP mapping, 10.0.1.35) is never found over
+          # mDNS from the pod; connect to it directly instead.
+          apple_tv_direct:
 
           # mDNS reflector: tell homekit the advertise IP address
           homekit:
