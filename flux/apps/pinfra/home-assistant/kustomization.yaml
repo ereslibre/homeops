@@ -6,6 +6,7 @@ resources:
   - backup-schedule.yaml
   - restic-sealed-secret.yaml
   - secrets-sealed-secret.yaml
+  - apple-tv-direct-sealed-secret.yaml
 # Frontend module that locks the kitchen display during a visit; served from
 # /config/www and loaded through extra_module_url.
 configMapGenerator:
@@ -134,6 +135,13 @@ patches:
             # secrets.yaml for `!secret` references, from a SealedSecret.
             containers:
               - name: home-assistant-app
+                # AirPlay credentials for apple_tv_direct, paired with pyatv.
+                env:
+                  - name: APPLE_TV_AIRPLAY_CREDENTIALS
+                    valueFrom:
+                      secretKeyRef:
+                        name: apple-tv-direct
+                        key: airplay-credentials
                 volumeMounts:
                   - name: secrets
                     mountPath: /config/secrets.yaml
@@ -211,8 +219,25 @@ patches:
           # not trusted as a proxy.
 
           # The Apple TV (static DHCP mapping, 10.0.1.35) is never found over
-          # mDNS from the pod; connect to it directly instead.
+          # mDNS from the pod; connect to it directly instead, over Companion
+          # and AirPlay.
           apple_tv_direct:
+            10.0.1.35:
+              airplay_credentials: !env_var APPLE_TV_AIRPLAY_CREDENTIALS
+              # _airplay._tcp TXT record of the Apple TV (dns-sd -L "Salón"
+              # _airplay._tcp from its subnet).
+              airplay_properties:
+                acl: "0"
+                deviceid: "1A:00:35:B3:42:1F"
+                features: "0x4A7FDFD5,0x3C177FDE"
+                flags: "0x100644"
+                model: "AppleTV14,1"
+                protovers: "1.1"
+                psi: "180035B3-421F-4CC3-98A4-1C852397FE12"
+                pk: "8df4d64da29fec86cc0514e1894070b2e24524f639ae0d2e98faaff1d825bca4"
+                srcvers: "980.77.2"
+                osvers: "27.0"
+                vv: "1"
 
           # mDNS reflector: tell homekit the advertise IP address
           homekit:

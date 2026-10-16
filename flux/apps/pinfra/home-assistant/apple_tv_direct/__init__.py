@@ -8,10 +8,22 @@ mapping) is perfectly reachable. This wraps the integration's scan so that,
 when it comes back empty, a Companion config is built from the address and
 credentials stored in the config entry. The Companion port changes on reboot,
 so it is found by trying to authenticate against the candidate ports.
+
+AirPlay (which tunnels the MRP protocol that reports what is playing) can be
+added per address with credentials paired outside Home Assistant, since the
+integration's own pairing flow also depends on discovery:
+
+    apple_tv_direct:
+      10.0.1.35:
+        airplay_credentials: !env_var APPLE_TV_AIRPLAY_CREDENTIALS
+        airplay_properties:  # the device's _airplay._tcp TXT record
+          features: "0x4A7FDFD5,0x3C177FDE"
 """
 
 import asyncio
 import logging
+
+import voluptuous as vol
 
 from pyatv import connect
 from pyatv.conf import AppleTV, ManualService
@@ -25,10 +37,28 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 
 DOMAIN = "apple_tv_direct"
-CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
+CONF_AIRPLAY_CREDENTIALS = "airplay_credentials"
+CONF_AIRPLAY_PROPERTIES = "airplay_properties"
+CONFIG_SCHEMA = vol.Schema(
+    {
+        vol.Optional(DOMAIN): vol.Any(
+            None,
+            {
+                cv.string: {
+                    vol.Required(CONF_AIRPLAY_CREDENTIALS): cv.string,
+                    vol.Optional(CONF_AIRPLAY_PROPERTIES, default={}): {
+                        cv.string: cv.string
+                    },
+                }
+            },
+        )
+    },
+    extra=vol.ALLOW_EXTRA,
+)
 
 # Companion is served from the dynamic port range; seen on 49152-49156.
 COMPANION_PORTS = range(49152, 49171)
+AIRPLAY_PORT = 7000
 PROBE_TIMEOUT = 1
 VERIFY_TIMEOUT = 10
 
@@ -69,7 +99,9 @@ async def _verify(hass: HomeAssistant, entry: ConfigEntry, port: int, credential
     return True
 
 
-async def _find(hass: HomeAssistant, entry: ConfigEntry) -> AppleTV | None:
+async def _find(
+    hass: HomeAssistant, entry: ConfigEntry, devices: dict[str, dict]
+) -> AppleTV | None:
     stored = entry.data.get("credentials", {})
     credentials = stored.get(str(Protocol.Companion.value)) or stored.get(
         Protocol.Companion.value
@@ -94,8 +126,20 @@ async def _find(hass: HomeAssistant, entry: ConfigEntry) -> AppleTV | None:
         if await _verify(hass, entry, port, credentials):
             _ports[entry.entry_id] = port
             _LOGGER.debug("%s: Companion found on %s:%d", entry.title, address, port)
-            # The integration sets the credentials itself before connecting.
-            return _config(entry, port)
+            # The integration sets the Companion credentials itself before
+            # connecting; AirPlay is not in the entry, so it carries its own.
+            conf = _config(entry, port)
+            if airplay := devices.get(address):
+                conf.add_service(
+                    ManualService(
+                        entry.unique_id,
+                        Protocol.AirPlay,
+                        AIRPLAY_PORT,
+                        airplay[CONF_AIRPLAY_PROPERTIES],
+                        credentials=airplay[CONF_AIRPLAY_CREDENTIALS],
+                    )
+                )
+            return conf
 
     _LOGGER.debug("%s: no Companion port answered on %s (open: %s)", entry.title, address, open_ports)
     return None
@@ -103,6 +147,7 @@ async def _find(hass: HomeAssistant, entry: ConfigEntry) -> AppleTV | None:
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Make the apple_tv integration fall back to a direct connection."""
+    devices = config.get(DOMAIN) or {}
     scan = AppleTVManager._scan
     if getattr(scan, "_apple_tv_direct", False):
         return True
@@ -110,7 +155,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     async def _scan(self: AppleTVManager) -> AppleTV | None:
         if conf := await scan(self):
             return conf
-        return await _find(self.hass, self.config_entry)
+        return await _find(self.hass, self.config_entry, devices)
 
     _scan._apple_tv_direct = True
     AppleTVManager._scan = _scan
