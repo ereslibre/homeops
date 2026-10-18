@@ -30,7 +30,7 @@ from pyatv.conf import AppleTV, ManualService
 from pyatv.const import Protocol
 
 from homeassistant.components.apple_tv import AppleTVManager
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import ConfigEntry, ConfigEntryState
 from homeassistant.const import CONF_ADDRESS, CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
@@ -173,4 +173,11 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
     _scan._apple_tv_direct = True
     AppleTVManager._scan = _scan
+
+    # apple_tv is a dependency, so its entries were set up (and may already
+    # be connected through the unpatched scan, without AirPlay) before this
+    # ran; reconnect them through the patched one.
+    for entry in hass.config_entries.async_entries("apple_tv"):
+        if entry.state in (ConfigEntryState.LOADED, ConfigEntryState.SETUP_IN_PROGRESS):
+            hass.config_entries.async_schedule_reload(entry.entry_id)
     return True
