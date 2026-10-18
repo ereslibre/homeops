@@ -1,12 +1,15 @@
 # This is a specific service used for the shelly gen 1 devices using
-# the CoIoT protocol
+# the CoIoT protocol. It has to be reachable from the LAN, hence
+# LoadBalancer. `externalTrafficPolicy: Local` preserves the source
+# IP, which Home Assistant uses to match CoIoT packets to devices.
 apiVersion: v1
 kind: Service
 metadata:
   name: shelly-coiot
   namespace: home-assistant
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/name: home-assistant
   ports:
