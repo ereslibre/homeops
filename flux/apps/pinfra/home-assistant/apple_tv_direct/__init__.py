@@ -127,22 +127,35 @@ async def _find(
             _ports[entry.entry_id] = port
             _LOGGER.debug("%s: Companion found on %s:%d", entry.title, address, port)
             # The integration sets the Companion credentials itself before
-            # connecting; AirPlay is not in the entry, so it carries its own.
-            conf = _config(entry, port)
-            if airplay := devices.get(address):
-                conf.add_service(
-                    ManualService(
-                        entry.unique_id,
-                        Protocol.AirPlay,
-                        AIRPLAY_PORT,
-                        airplay[CONF_AIRPLAY_PROPERTIES],
-                        credentials=airplay[CONF_AIRPLAY_CREDENTIALS],
-                    )
-                )
-            return conf
+            # connecting.
+            return _config(entry, port)
 
     _LOGGER.debug("%s: no Companion port answered on %s (open: %s)", entry.title, address, open_ports)
     return None
+
+
+def _add_airplay(conf: AppleTV, entry: ConfigEntry, devices: dict[str, dict]) -> None:
+    """Add AirPlay to the config, with the credentials paired outside HA.
+
+    AirPlay is not in the entry, so the integration only scans for Companion
+    and never sets AirPlay credentials; without this, a device found by the
+    integration's own scan (e.g. over the mDNS reflector) is connected over
+    Companion only, which reports power but never what is playing.
+    """
+    if not (airplay := devices.get(entry.data[CONF_ADDRESS])):
+        return
+    if service := conf.get_service(Protocol.AirPlay):
+        service.credentials = airplay[CONF_AIRPLAY_CREDENTIALS]
+        return
+    conf.add_service(
+        ManualService(
+            entry.unique_id,
+            Protocol.AirPlay,
+            AIRPLAY_PORT,
+            airplay[CONF_AIRPLAY_PROPERTIES],
+            credentials=airplay[CONF_AIRPLAY_CREDENTIALS],
+        )
+    )
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -153,9 +166,10 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         return True
 
     async def _scan(self: AppleTVManager) -> AppleTV | None:
-        if conf := await scan(self):
-            return conf
-        return await _find(self.hass, self.config_entry, devices)
+        conf = await scan(self) or await _find(self.hass, self.config_entry, devices)
+        if conf:
+            _add_airplay(conf, self.config_entry, devices)
+        return conf
 
     _scan._apple_tv_direct = True
     AppleTVManager._scan = _scan
