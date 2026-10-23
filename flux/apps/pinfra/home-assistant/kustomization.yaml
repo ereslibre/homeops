@@ -37,7 +37,7 @@ patches:
           spec:
             initContainers:
               - name: install-kef-connector
-                image: ghcr.io/home-assistant/home-assistant:2026.10
+                image: ghcr.io/home-assistant/home-assistant:2026.10.2
                 imagePullPolicy: IfNotPresent
                 env:
                   - name: KEF_CONNECTOR_VERSION
@@ -69,7 +69,7 @@ patches:
                   - name: config-root
                     mountPath: /config
               - name: install-huawei-solar
-                image: ghcr.io/home-assistant/home-assistant:2026.10
+                image: ghcr.io/home-assistant/home-assistant:2026.10.2
                 imagePullPolicy: IfNotPresent
                 env:
                   - name: HUAWEI_SOLAR_VERSION
@@ -102,7 +102,7 @@ patches:
                   - name: config-root
                     mountPath: /config
               - name: install-kiosk-mode
-                image: ghcr.io/home-assistant/home-assistant:2026.10
+                image: ghcr.io/home-assistant/home-assistant:2026.10.2
                 imagePullPolicy: IfNotPresent
                 env:
                   - name: KIOSK_MODE_VERSION
