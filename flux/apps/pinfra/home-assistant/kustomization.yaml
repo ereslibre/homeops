@@ -750,9 +750,78 @@ patches:
               - /local/kiosk-mode/kiosk-mode.js?v15.0.0
               - /local/visit-lock/visit-lock.js?v2
 
+          # Mealie API, for what the integration does not cover (adding a
+          # recipe's ingredients to a shopping list). `path` goes after /api/.
+          rest_command:
+            mealie_get:
+              url: "https://mealie.ereslibre.net/api/{{ path }}"
+              method: get
+              headers:
+                authorization: !secret mealie_authorization
+            mealie_post:
+              url: "https://mealie.ereslibre.net/api/{{ path }}"
+              method: post
+              headers:
+                authorization: !secret mealie_authorization
+              content_type: "application/json"
+              payload: "{{ body | to_json }}"
+
           automation: !include automations.yaml
           script: !include scripts.yaml
           scene: !include scenes.yaml
+        scripts.yaml: |
+          # Adds the ingredients of every recipe in this week's Mealie meal plan
+          # (Monday to Sunday, the week the kitchen calendar shows) to the
+          # "Compra" list. Recipes already on the list are skipped, so pressing
+          # it twice does not double the quantities; a recipe planned twice is
+          # added twice.
+          compra_menu_semana:
+            alias: "Añadir el menú de la semana a la compra"
+            icon: mdi:cart-plus
+            mode: single
+            variables:
+              lista: f480bccd-c740-4c97-84c4-39dcf39b9461  # todo.casa_mealie_compra
+            sequence:
+              - variables:
+                  lunes: "{{ (now().date() - timedelta(days=now().weekday())).isoformat() }}"
+                  domingo: "{{ (now().date() + timedelta(days=6 - now().weekday())).isoformat() }}"
+              - action: rest_command.mealie_get
+                data:
+                  path: "households/mealplans?start_date={{ lunes }}&end_date={{ domingo }}&perPage=-1"
+                response_variable: menu
+              - action: rest_command.mealie_get
+                data:
+                  path: "households/shopping/lists/{{ lista }}"
+                response_variable: compra
+              - if: "{{ menu.status != 200 or compra.status != 200 }}"
+                then:
+                  - stop: "Mealie no responde"
+                    error: true
+              - variables:
+                  recetas: >-
+                    {% set ya = compra.content.recipeReferences | map(attribute='recipeId') | list %}
+                    {% set ids = menu.content['items'] | map(attribute='recipeId')
+                       | reject('none') | reject('in', ya) | list %}
+                    {% set ns = namespace(out=[]) %}
+                    {% for id in ids | unique %}
+                      {% set ns.out = ns.out + [{'recipeId': id,
+                          'recipeIncrementQuantity': ids | select('eq', id) | list | count}] %}
+                    {% endfor %}
+                    {{ ns.out }}
+              - if: "{{ recetas | count > 0 }}"
+                then:
+                  - action: rest_command.mealie_post
+                    data:
+                      path: "households/shopping/lists/{{ lista }}/recipe"
+                      body: "{{ recetas }}"
+                    response_variable: resultado
+                  - if: "{{ resultado.status != 200 }}"
+                    then:
+                      - stop: "Mealie no ha añadido las recetas"
+                        error: true
+                  - action: homeassistant.update_entity
+                    target:
+                      entity_id: todo.casa_mealie_compra
     target:
       kind: ConfigMap
       name: configurations
