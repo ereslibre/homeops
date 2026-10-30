@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - external-dns
   - home-assistant
+  - mealie
   - mosquitto
   - pihole
   - registry

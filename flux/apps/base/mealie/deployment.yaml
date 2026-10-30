@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+  namespace: mealie
+  labels:
+    app.kubernetes.io/name: mealie
+spec:
+  replicas: 1
+  strategy:
+    # SQLite on a ReadWriteOnce volume: never run two pods at once.
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mealie
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mealie
+    spec:
+      containers:
+      - name: mealie
+        image: ghcr.io/mealie-recipes/mealie:v3.29.0
+        ports:
+        - containerPort: 9000
+        env:
+        - name: TZ
+          value: Europe/Madrid
+        - name: ALLOW_SIGNUP
+          value: "false"
+        resources:
+          requests:
+            memory: "256Mi"
+          limits:
+            memory: "1000Mi"
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: mealie-data

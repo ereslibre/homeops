@@ -1,0 +1,52 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base/mealie
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: mealie
+        namespace: mealie
+      spec:
+        template:
+          spec:
+            containers:
+            - name: mealie
+              env:
+              - name: BASE_URL
+                value: https://mealie.ereslibre.net
+    target:
+      kind: Deployment
+      name: mealie
+      namespace: mealie
+  - patch: |-
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: mealie
+        namespace: mealie
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          nginx.ingress.kubernetes.io/proxy-body-size: 50m
+      spec:
+        rules:
+        - host: mealie.ereslibre.net
+          http:
+            paths:
+            - pathType: Prefix
+              path: /
+              backend:
+                service:
+                  name: mealie
+                  port:
+                    name: mealie
+        tls:
+        - hosts:
+          - mealie.ereslibre.net
+          secretName: mealie-ereslibre-net-cert
+    target:
+      kind: Ingress
+      name: mealie
+      namespace: mealie
