@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: mosquitto
-          image: eclipse-mosquitto:2.1.2
+          image: eclipse-mosquitto:2.1.2-alpine
           ports:
             - containerPort: 8883
             - containerPort: 9001
